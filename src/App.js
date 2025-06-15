@@ -3,10 +3,16 @@ import './App.css';
 import NavBar from './components/NavBar';
 import NewProject from './pages/NewProject';
 import AllProjects from './pages/AllProjects';
+import { Routes, Route } from 'react-router-dom';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      <NavBar />
+      <Routes>
+        <Route path = "/projects" element = {<AllProjects />} />
+        <Route path = "projects/new" element = {<NewProject />} />
+      </Routes>
+      {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
@@ -19,7 +25,7 @@ function App() {
         >
           Learn React
         </a>
-      </header>
+      </header> */}
     </div>
   );
 }
