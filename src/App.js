@@ -4,6 +4,7 @@ import NavBar from './components/NavBar';
 import NewProject from './pages/NewProject';
 import AllProjects from './pages/AllProjects';
 import { Routes, Route } from 'react-router-dom';
+import './global_styles/global.scss'
 function App() {
   return (
     <div className="App">
@@ -12,20 +13,6 @@ function App() {
         <Route path = "/projects" element = {<AllProjects />} />
         <Route path = "projects/new" element = {<NewProject />} />
       </Routes>
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
     </div>
   );
 }

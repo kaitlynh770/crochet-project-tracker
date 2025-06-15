@@ -1,0 +1,9 @@
+@import './fonts';
+
+body {
+  font-family: $font-primary;
+  font-weight: $font-weight-regular;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+}
