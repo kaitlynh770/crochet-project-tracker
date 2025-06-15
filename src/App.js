@@ -1,6 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
-
+import NavBar from './components/NavBar';
+import NewProject from './pages/NewProject';
+import AllProjects from './pages/AllProjects';
 function App() {
   return (
     <div className="App">
