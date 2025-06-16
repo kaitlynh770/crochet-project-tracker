@@ -23,5 +23,9 @@
     .links{
         text-decoration: none;
         margin-bottom: 20px;
+        color: #333;
+        &:hover {
+            color: #666; // hover link color
+        }
     }
 }
