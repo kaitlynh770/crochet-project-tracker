@@ -1,7 +1,7 @@
 import React from 'react';
 import Project from '../components/Project';
-import miffy from '../assets/miffy keychain.jpeg'
-import my_melody from '../assets/my melody(s).jpg'
+import miffy from '../assets/miffy_keychain.jpeg'
+import my_melody from '../assets/my_melodys.jpg'
 
 function AllProjects(){
     const projects = [
@@ -50,7 +50,9 @@ function AllProjects(){
             </h1>
             <div>
                 {projects.map((project, index) => {
-                    <Project key = {index} name = {project.name} projectImg={project.projectImg} pieces={project.pieces} />
+                    return(
+                        <Project key = {index} name = {project.name} projectImg={project.projectImg} pieces={project.pieces} />
+                    )
                 })}
             </div>
         </div>
