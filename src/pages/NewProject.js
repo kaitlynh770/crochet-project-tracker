@@ -4,7 +4,7 @@ function NewProject(){
     return(
         <div>
             <h1>
-                NewProject
+                New Project
             </h1>
         </div>
     )
