@@ -8,11 +8,15 @@ import './global_styles/global.scss'
 function App() {
   return (
     <div className="App">
-      <NavBar />
-      <Routes>
-        <Route path = "/projects" element = {<AllProjects />} />
-        <Route path = "projects/new" element = {<NewProject />} />
-      </Routes>
+      <div className = "navigate">
+        <NavBar />
+        <div className = "main-content">
+          <Routes>
+            <Route path = "/projects" element = {<AllProjects />} />
+            <Route path = "projects/new" element = {<NewProject />} />
+          </Routes>
+        </div>
+      </div>
     </div>
   );
 }

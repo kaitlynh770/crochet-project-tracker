@@ -1,7 +1,18 @@
 .App {
   text-align: center;
 }
+.navigate{
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
 
+.main-content{
+  flex-grow: 1;
+  padding: 2vw;
+  overflow-y: auto;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;

@@ -2,7 +2,7 @@ import React from 'react';
 import Project from '../components/Project';
 import miffy from '../assets/miffy_keychain.jpeg'
 import my_melody from '../assets/my_melodys.jpg'
-
+import styles from '../pages_styling/AllProjects.scss'
 function AllProjects(){
     const projects = [
         {
@@ -48,7 +48,7 @@ function AllProjects(){
             <h1>
                 All Projects
             </h1>
-            <div>
+            <div className= {styles.all_projects} >
                 {projects.map((project, index) => {
                     return(
                         <Project key = {index} name = {project.name} projectImg={project.projectImg} pieces={project.pieces} />
