@@ -1,11 +1,12 @@
 import React from 'react';
 import Piece from './Piece';
+import styles from './Project.module.scss'
 
 //this is going to be what a project is made up of
 //photo, name, pieces Piece[]
 function Project({projectImg, name, pieces}){
     return(
-        <div>
+        <div className = {styles.project}>
             <img src = {projectImg} alt = "Project Image"/>
             <h2>
                 {name}

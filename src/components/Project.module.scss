@@ -1,0 +1,17 @@
+.project{
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 16px;
+    max-width: 300px;
+    margin: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    img {
+        width: 100%;       // Make image take full width of the card (max 300px)
+        height: auto;      // Maintain aspect ratio
+        border-radius: 4px; // Optional: rounded corners on image
+        object-fit: cover;
+    }
+}
