@@ -7,7 +7,7 @@
   margin: 8px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  //align-items: center;
 
   img {
     width: 300px;          // Fixed width
@@ -15,4 +15,13 @@
     border-radius: 4px;    // Optional rounded corners
     object-fit: cover;     // Crop and fill the image area
   }
+}
+.projectName {
+    font-size: 1vw;
+    align-items: center;
+}
+.project_details{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
