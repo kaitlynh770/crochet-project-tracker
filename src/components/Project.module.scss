@@ -16,6 +16,18 @@
     object-fit: cover;     // Crop and fill the image area
   }
 }
+.toggleButton {
+  align-self: flex-end;
+  background: none;
+  color: #000000;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+    &:hover{
+        color: #777373
+    }
+}
 .projectName {
     font-size: 1vw;
     align-items: center;
