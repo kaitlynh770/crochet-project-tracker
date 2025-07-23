@@ -51,7 +51,7 @@ function AllProjects(){
             <div className= {styles.all_projects} >
                 {projects.map((project, index) => {
                     return(
-                        <Project key = {index} name = {project.name} projectImg={project.projectImg} pieces={project.pieces} />
+                        <Project key={`project-${project.id}-${project.name}`} name = {project.name} projectImg={project.projectImg} pieces={project.pieces} />
                     )
                 })}
             </div>
