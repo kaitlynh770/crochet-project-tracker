@@ -1,0 +1,19 @@
+.form {
+  display: flex;
+  align-items: center;         // Vertically center children
+  justify-content: center; // Keep children left-aligned
+              // Full viewport height for vertical centering
+}
+
+.new_project {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  background: #FADCE5;
+  justify-content: center;
+  width: 60%;
+
+  & h2 {
+    display: block;
+  }
+}

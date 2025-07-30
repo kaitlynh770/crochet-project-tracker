@@ -1,11 +1,30 @@
-import React from 'react';
+import {useState} from 'react';
+import ReactDOM from 'react-dom/client';
+import styles from '../pages_styling/NewProject.module.scss';
 
 function NewProject(){
+    const [projectName, setProjectName] = useState("");
+    const [notes, setNotes] = useState("");
     return(
-        <div>
-            <h1>
-                New Project
-            </h1>
+        <div className = {styles.form}>
+            <form className = {styles.new_project}>
+                <h2> New Project </h2>
+                <label> Project Name
+                    <input
+                        type = "text"
+                        value = {projectName}
+                        onChange = {(e) => setProjectName(e.target.value)}
+                    />
+                </label>
+                <label>Overall Notes
+                    <input
+                        type = "text"
+                        value = {notes}
+                        onChange = {(e) => setNotes(e.target.value)}
+                    />
+                </label>
+                <button> Add Piece</button>
+            </form>
         </div>
     )
 }
