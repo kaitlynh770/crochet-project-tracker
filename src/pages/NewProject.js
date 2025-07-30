@@ -18,12 +18,13 @@ function NewProject(){
                 </label>
                 <label>Overall Notes
                     <input
+                        className= {styles.notes}
                         type = "text"
                         value = {notes}
                         onChange = {(e) => setNotes(e.target.value)}
                     />
                 </label>
-                <button> Add Piece</button>
+                <button className = {styles.add_piece}> Add Piece</button>
             </form>
         </div>
     )

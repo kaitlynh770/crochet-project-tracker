@@ -1,8 +1,8 @@
 .form {
   display: flex;
   align-items: center;         // Vertically center children
-  justify-content: center; // Keep children left-aligned
-              // Full viewport height for vertical centering
+  justify-content: center;     // Center form horizontally
+  flex-direction: column;
 }
 
 .new_project {
@@ -10,10 +10,33 @@
   flex-direction: column;
   border-radius: 8px;
   background: #FADCE5;
-  justify-content: center;
+  justify-content: center;  // vertical centering if needed
+  /* No align-items here, so children stretch or align left */
   width: 60%;
 
-  & h2 {
-    display: block;
+  & label {
+    margin: 10px 40px;
   }
+
+  & input {
+    width: 60%;          // fixed width for inputs
+    margin-left: 8px;
+  }
+
+  & h2 {
+    text-align: center;
+  }
+}
+.notes {
+    width: 60%;
+    height: 50px;  /* Set height to make it square */
+    resize: none;   /* Optional: prevent resizing if it's a textarea */
+    /* Optional styling */
+    //padding: 8px;
+    font-size: 16px;
+    //box-sizing: border-box; /* Include padding in width/height */
+}
+.add_piece {
+  width: 50%;             // same width as inputs
+  text-align: center;     // center the button horizontally
 }
