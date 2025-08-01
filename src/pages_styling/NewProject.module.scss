@@ -1,42 +1,89 @@
+// --- Center the form container vertically and horizontally ---
 .form {
+  min-height: 100vh;                    // Full viewport height
   display: flex;
-  align-items: center;         // Vertically center children
-  justify-content: center;     // Center form horizontally
   flex-direction: column;
+  align-items: center;                   // Horizontal center
+  //justify-content: center;               // Vertical center
+  //background: #fff;                      // (Optional) page background
 }
 
+// --- Main form styling ---
 .new_project {
+  background: #FADCE5;                   // Pink background
+  border-radius: 16px;                   // Rounded corners
+  box-shadow: 0 4px 16px 0 #eadde5;      // Soft shadow for depth (optional)
+  width: 60%;                          // Fixed width for consistent input centering
+  padding: 32px 24px 28px 24px;          // Ample inner spacing
   display: flex;
   flex-direction: column;
-  border-radius: 8px;
-  background: #FADCE5;
-  justify-content: center;  // vertical centering if needed
-  /* No align-items here, so children stretch or align left */
-  width: 60%;
+  align-items: center;                   // Center children horizontally
 
-  & label {
-    margin: 10px 40px;
-  }
-
-  & input {
-    width: 60%;          // fixed width for inputs
-    margin-left: 8px;
-  }
-
-  & h2 {
+  // --- Form title ---
+  h2 {
     text-align: center;
+    margin-bottom: 28px;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #575355;
+  }
+
+  // --- Each field-container handles alignment ---
+  .field-container {
+    width: 100%;                         // Take full form width
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;              // Left-align label and input together
+    margin-bottom: 24px;                 // Consistent spacing between fields
+
+    label {
+      margin-bottom: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #511a3d;
+    }
+
+    input,
+    .notes {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px 14px;
+      font-size: 1rem;
+      border: 1.5px solid #d2a3b4;
+      border-radius: 6px;
+      margin: 0;
+      outline: none;
+      transition: border 0.2s;
+
+      &:focus {
+        border-color: #e858a5;
+      }
+    }
+    // --- Notes textarea styling overrides below ---
+    .notes {
+      height: 110px;                    // Square-like
+      resize: none;                     // Prevent resizing
+    }
   }
 }
-.notes {
-    width: 60%;
-    height: 50px;  /* Set height to make it square */
-    resize: none;   /* Optional: prevent resizing if it's a textarea */
-    /* Optional styling */
-    //padding: 8px;
-    font-size: 16px;
-    //box-sizing: border-box; /* Include padding in width/height */
-}
+
+// --- Centered, full-width button ---
 .add_piece {
-  width: 50%;             // same width as inputs
-  text-align: center;     // center the button horizontally
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  margin-top: 10px;
+  background: #e858a5;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  align-self: center;
+  transition: background 0.2s;
+
+  &:hover {
+    background: #c11674;
+  }
 }

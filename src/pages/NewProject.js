@@ -6,26 +6,30 @@ function NewProject(){
     const [projectName, setProjectName] = useState("");
     const [notes, setNotes] = useState("");
     return(
-        <div className = {styles.form}>
-            <form className = {styles.new_project}>
-                <h2> New Project </h2>
-                <label> Project Name
+        <div className ={styles.form}>
+            <form className={styles.new_project}>
+                <h2>New Project</h2>
+
+                <div className={styles["field-container"]}>
+                    <label>Project Name</label>
                     <input
-                        type = "text"
-                        value = {projectName}
-                        onChange = {(e) => setProjectName(e.target.value)}
+                    type="text"
+                    value={projectName}
+                    onChange={e => setProjectName(e.target.value)}
                     />
-                </label>
-                <label>Overall Notes
-                    <input
-                        className= {styles.notes}
-                        type = "text"
-                        value = {notes}
-                        onChange = {(e) => setNotes(e.target.value)}
+                </div>
+
+                <div className={styles["field-container"]}>
+                    <label>Overall Notes</label>
+                    <textarea
+                    className={styles.notes}
+                    value={notes}
+                    onChange={e => setNotes(e.target.value)}
                     />
-                </label>
-                <button className = {styles.add_piece}> Add Piece</button>
-            </form>
+                </div>
+
+                <button className={styles.add_piece}>Add Piece</button>
+        </form>
         </div>
     )
 }
