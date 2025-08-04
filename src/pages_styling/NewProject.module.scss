@@ -49,14 +49,14 @@
       box-sizing: border-box;
       padding: 10px 14px;
       font-size: 1rem;
-      border: 1.5px solid #d2a3b4;
+      border: 1.5px solid #f5c6df;
       border-radius: 6px;
       margin: 0;
       outline: none;
       transition: border 0.2s;
 
       &:focus {
-        border-color: #f5c6df;
+        border-color: #d2a3b4;
       }
     }
     // --- Notes textarea styling overrides below ---
@@ -84,6 +84,7 @@
   transition: background 0.2s;
 
   &:hover {
-    background: #d5dfe2;
+    background: #A0C4D2;
+    color: #ffff;
   }
 }
