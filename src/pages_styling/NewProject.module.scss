@@ -56,7 +56,7 @@
       transition: border 0.2s;
 
       &:focus {
-        border-color: #e858a5;
+        border-color: #f5c6df;
       }
     }
     // --- Notes textarea styling overrides below ---
@@ -73,8 +73,8 @@
   box-sizing: border-box;
   padding: 12px;
   margin-top: 10px;
-  background: #e858a5;
-  color: #fff;
+  background: #E6F2F5;
+  color: #575355;
   font-size: 1.1rem;
   font-weight: 700;
   border: none;
@@ -84,6 +84,6 @@
   transition: background 0.2s;
 
   &:hover {
-    background: #c11674;
+    background: #d5dfe2;
   }
 }
