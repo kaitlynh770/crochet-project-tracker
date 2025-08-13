@@ -9,6 +9,10 @@ function NewPiece(){
     const [pieceRounds, setPieceRounds] = useState("");
     function savePiece(e){
         e.preventDefault();
+        if(pieceName || pieceRounds == ""){
+            alert("Please fill out all fields!")
+            return;
+        }
         console.log(`Name : ${pieceName} Quantity: ${pieceQuantity} Rounds: ${pieceRounds}`);
     }
     return(
