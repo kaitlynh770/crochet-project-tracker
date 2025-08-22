@@ -42,7 +42,7 @@ function NewProject(){
                         <button onClick = {toggleMenu} className={styles.add_piece} type = "button">Add Piece</button>
                 </form>
                 {isNewPieceMenuOpen && (
-                    <NewPiece />
+                    <NewPiece onClose={() => setNewPieceMenuOpen(!isNewPieceMenuOpen)} />
                 )}
             </div>
     )

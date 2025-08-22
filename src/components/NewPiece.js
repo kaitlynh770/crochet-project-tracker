@@ -2,7 +2,7 @@ import {useEffect, useRef, useState} from 'react';
 import ReactDOM from 'react-dom/client';
 import styles from './NewPiece.module.scss'
 
-function NewPiece(){
+function NewPiece({onClose}){
     const [pieceName, setPieceName] = useState("");
     const [pieceQuantity, setPieceQuantity] = useState(1);
     const quantity = [1,2,3,4,5]
@@ -14,9 +14,27 @@ function NewPiece(){
             return;
         }
         console.log(`Name : ${pieceName} Quantity: ${pieceQuantity} Rounds: ${pieceRounds}`);
+        onClose(); // close overlay after save
     }
+    const menuRef = useRef(null)
+
+    useEffect(() => {
+        menuRef.current && menuRef.current.focus()
+    })
+
+    useEffect(() => {
+    function handleClickOutside(event) {
+        if (menuRef.current && !menuRef.current.contains(event.target)) {
+        onClose();
+        }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+    };
+    }, [onClose]);
     return(
-        <div className = {styles.menu}>
+        <div className = {styles.overlay}>
             <form className= {styles.new_piece}>
                 <h2>
                     New Piece
@@ -24,6 +42,7 @@ function NewPiece(){
                 <div className = {styles["field-container"]}>
                     <label> Piece Name </label>
                     <input
+                        ref = {menuRef}
                         type = "text"
                         value = {pieceName}
                         onChange = {e => setPieceName(e.target.value)}
