@@ -6,37 +6,45 @@ import NewPiece  from '../components/NewPiece'
 function NewProject(){
     const [projectName, setProjectName] = useState("");
     const [notes, setNotes] = useState("");
+    const [isNewPieceMenuOpen, setNewPieceMenuOpen] = useState(false);
+
+    const toggleMenu = () =>{
+        setNewPieceMenuOpen(!isNewPieceMenuOpen)
+    }
     return(
-        <div>
-            <h2>
-                <NewPiece />
-            </h2>
-        </div>
-        // <div className ={styles.form}>
-        //     <form className={styles.new_project}>
-        //         <h2>New Project</h2>
-
-        //         <div className={styles["field-container"]}>
-        //             <label>Project Name</label>
-        //             <input
-        //             type="text"
-        //             value={projectName}
-        //             onChange={e => setProjectName(e.target.value)}
-        //             />
-        //         </div>
-
-        //         <div className={styles["field-container"]}>
-        //             <label>Overall Notes</label>
-        //             <textarea
-        //             className={styles.notes}
-        //             value={notes}
-        //             onChange={e => setNotes(e.target.value)}
-        //             />
-        //         </div>
-
-        //         <button className={styles.add_piece}>Add Piece</button>
-        // </form>
+        // <div>
+        //     <h2>
+        //         <NewPiece />
+        //     </h2>
         // </div>
+            <div className ={styles.form}>
+                <form className={styles.new_project}>
+                        <h2>New Project</h2>
+
+                        <div className={styles["field-container"]}>
+                            <label>Project Name</label>
+                            <input
+                            type="text"
+                            value={projectName}
+                            onChange={e => setProjectName(e.target.value)}
+                            />
+                        </div>
+
+                        <div className={styles["field-container"]}>
+                            <label>Overall Notes</label>
+                            <textarea
+                            className={styles.notes}
+                            value={notes}
+                            onChange={e => setNotes(e.target.value)}
+                            />
+                        </div>
+
+                        <button onClick = {toggleMenu} className={styles.add_piece} type = "button">Add Piece</button>
+                </form>
+                {isNewPieceMenuOpen && (
+                    <NewPiece />
+                )}
+            </div>
     )
 }
 export default NewProject
