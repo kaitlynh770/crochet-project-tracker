@@ -7,9 +7,15 @@ function NewProject(){
     const [projectName, setProjectName] = useState("");
     const [notes, setNotes] = useState("");
     const [isNewPieceMenuOpen, setNewPieceMenuOpen] = useState(false);
+    const [pieces, setPieces] = useState([]) //array to store pieces of a project, this information will be sent to us from the NewPiece menu
 
     const toggleMenu = () =>{
         setNewPieceMenuOpen(!isNewPieceMenuOpen)
+    }
+    const addPiece = (piece) =>{
+        setPieces(pieces => [...pieces, piece])
+        console.log(pieces[0])
+        setNewPieceMenuOpen(false)
     }
     return(
             <div className ={styles.form}>
@@ -37,7 +43,7 @@ function NewProject(){
                         <button onClick = {toggleMenu} className={styles.add_piece} type = "button">Add Piece</button>
                 </form>
                 {isNewPieceMenuOpen && (
-                    <NewPiece onClose={() => setNewPieceMenuOpen(!isNewPieceMenuOpen)} />
+                    <NewPiece onClose={() => setNewPieceMenuOpen(!isNewPieceMenuOpen)} onSave = {addPiece} />
                 )}
             </div>
     )
