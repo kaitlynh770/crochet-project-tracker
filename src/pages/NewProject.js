@@ -1,7 +1,8 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import ReactDOM from 'react-dom/client';
 import styles from '../pages_styling/NewProject.module.scss';
 import NewPiece  from '../components/NewPiece'
+import Piece from '../components/Piece';
 
 function NewProject(){
     const [projectName, setProjectName] = useState("");
@@ -14,9 +15,15 @@ function NewProject(){
     }
     const addPiece = (piece) =>{
         setPieces(pieces => [...pieces, piece])
-        console.log(pieces[0])
+        // console.log(pieces[0])
         setNewPieceMenuOpen(false)
     }
+
+    useEffect(() => { //check pieces array when it updates
+        if (pieces.length > 0) {
+            console.log('First piece:', pieces[0]);
+        }
+    }, [pieces]);
     return(
             <div className ={styles.form}>
                 <form className={styles.new_project}>
@@ -39,7 +46,21 @@ function NewProject(){
                             onChange={e => setNotes(e.target.value)}
                             />
                         </div>
-
+                        {pieces.length > 0 &&
+                            <div className={styles["field-container"]}>
+                                <label>Pieces</label>
+                                <div className = {styles.pieces}>
+                                    {pieces.map((piece, index) => (
+                                        <Piece
+                                            key = {index}
+                                            name = {piece.pieceName}
+                                            rounds = {piece.pieceRounds}
+                                            quantity = {piece.pieceQuantity}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                        }
                         <button onClick = {toggleMenu} className={styles.add_piece} type = "button">Add Piece</button>
                 </form>
                 {isNewPieceMenuOpen && (

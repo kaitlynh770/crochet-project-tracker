@@ -75,6 +75,7 @@ function NewPiece({onClose, onSave}){
                     <input
                         type = "number"
                         value = {pieceRounds}
+                        min = "1"
                         onChange={e => {
                             const val = e.target.value;
                             // Allow empty string or convert to number

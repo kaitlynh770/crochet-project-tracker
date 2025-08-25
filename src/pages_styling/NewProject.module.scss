@@ -67,6 +67,14 @@
   }
 }
 
+.pieces{
+  background: #ffff;
+  box-sizing: border-box;
+  border-radius: 6px;
+  border: 1.5px solid #f5c6df;
+  box-shadow: 0 4px 16px 0 #eadde5;
+}
+
 // --- Centered, full-width button ---
 .add_piece {
   width: 100%;
