@@ -68,11 +68,21 @@
 }
 
 .pieces{
+  display: flex;
+  flex-direction: row;
   background: #ffff;
   box-sizing: border-box;
   border-radius: 6px;
   border: 1.5px solid #f5c6df;
   box-shadow: 0 4px 16px 0 #eadde5;
+
+}
+.pieces_container{
+    display: flex;          /* Use flexbox */
+    flex-direction: row;    /* Arrange children in a row */
+    flex-wrap: wrap;        /* Allow wrapping to next line if needed */
+    gap: 16px;              /* Space between pieces */
+    justify-content: flex-start;
 }
 
 // --- Centered, full-width button ---

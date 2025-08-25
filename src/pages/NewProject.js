@@ -49,14 +49,15 @@ function NewProject(){
                         {pieces.length > 0 &&
                             <div className={styles["field-container"]}>
                                 <label>Pieces</label>
-                                <div className = {styles.pieces}>
+                                <div className = {styles.pieces_container}>
                                     {pieces.map((piece, index) => (
-                                        <Piece
-                                            key = {index}
-                                            name = {piece.pieceName}
-                                            rounds = {piece.pieceRounds}
-                                            quantity = {piece.pieceQuantity}
-                                        />
+                                        <div key = {index} className = {styles.pieces}>
+                                            <Piece
+                                                name = {piece.pieceName}
+                                                rounds = {piece.pieceRounds}
+                                                quantity = {piece.pieceQuantity}
+                                            />
+                                        </div>
                                     ))}
                                 </div>
                             </div>
