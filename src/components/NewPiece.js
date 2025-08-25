@@ -16,33 +16,34 @@ function NewPiece({onClose}){
         console.log(`Name : ${pieceName} Quantity: ${pieceQuantity} Rounds: ${pieceRounds}`);
         onClose(); // close overlay after save
     }
+    const inputRef = useRef(null) //create a reference to the DOM element that we want to keep track of
     const menuRef = useRef(null)
 
-    useEffect(() => {
-        menuRef.current && menuRef.current.focus()
-    })
+    useEffect(() => { //check if anything is an element is attached to the ref, if there is then focus on it
+        inputRef.current && inputRef.current.focus()
+    }, [])
 
-    useEffect(() => {
+    useEffect(() => { //this useEffect hook is listening for any mouse clicks anywhere on the page, if the click happened outside of what was stored in inputRef, we would close the element
     function handleClickOutside(event) {
-        if (menuRef.current && !menuRef.current.contains(event.target)) {
-        onClose();
+        if (menuRef.current && !menuRef.current.contains(event.target)) { //check if there's anything attached to the ref and check if the click happened inside or outside the element
+            onClose(); //if there is a DOM element attached to it and the click happened outside the element (in this case, the menu) then close it
         }
     }
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside); //addEventListener to the whole document to catch all the clicks
     return () => {
-        document.removeEventListener('mousedown', handleClickOutside);
+        document.removeEventListener('mousedown', handleClickOutside); //cleanup function in case component unmounts or any dependencies change
     };
     }, [onClose]);
     return(
         <div className = {styles.overlay}>
-            <form className= {styles.new_piece}>
+            <form className= {styles.new_piece} ref = {menuRef}>
                 <h2>
                     New Piece
                 </h2>
                 <div className = {styles["field-container"]}>
                     <label> Piece Name </label>
                     <input
-                        ref = {menuRef}
+                        ref = {inputRef}
                         type = "text"
                         value = {pieceName}
                         onChange = {e => setPieceName(e.target.value)}

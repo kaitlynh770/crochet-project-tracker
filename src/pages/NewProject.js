@@ -12,11 +12,6 @@ function NewProject(){
         setNewPieceMenuOpen(!isNewPieceMenuOpen)
     }
     return(
-        // <div>
-        //     <h2>
-        //         <NewPiece />
-        //     </h2>
-        // </div>
             <div className ={styles.form}>
                 <form className={styles.new_project}>
                         <h2>New Project</h2>
