@@ -80,19 +80,19 @@
 
 }
 .pieces_container{
-    display: flex;          /* Use flexbox */
-    flex-direction: row;    /* Arrange children in a row */
-    flex-wrap: wrap;        /* Allow wrapping to next line if needed */
-    gap: 16px;              /* Space between pieces */
-    justify-content: flex-start;
+    display: flex; //use flex
+    flex-direction: row; //use row to display pieces side by side
+    flex-wrap: wrap; //wrap to next line if needed
+    gap: 16px; //spacing
+    justify-content: flex-start; //start from the left
 }
-.buttons{
+.buttons{ //make sure buttons are always at the bottom of the piece container
   display: flex;
-  flex-direction: row;
-  margin-top: auto;
+  flex-direction: row; //buttons displayed side by side
+  margin-top: auto; //push to bottom of the container
 
   img{
-    object-fit: contain;
+    object-fit: contain; //try to keep ratio of the image even though i'm resizing
     width: 20%;
     margin: 12px 8px;
     cursor: pointer;
