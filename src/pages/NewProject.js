@@ -64,14 +64,14 @@ function NewProject(){
                                                 <img src = {delete_icon} />
                                             </div>
                                             {index === pieces.length-1 && (
-                                                <button className = {styles.fab}>+</button>
+                                                <button className = {styles.fab} onClick = {toggleMenu} type= "button">+</button>
                                             )}
                                         </div>
                                     ))}
                                 </div>
                             </div>
                         }
-                        <button onClick = {toggleMenu} className={styles.add_piece} type = "button">Add Piece</button>
+                        {pieces.length > 0 ? (<button className = {styles.add_piece} type = "button">Create Project</button>) : (<button onClick = {toggleMenu} className={styles.add_piece} type = "button">Add Piece</button>)}
                 </form>
                 {isNewPieceMenuOpen && (
                     <NewPiece onClose={() => setNewPieceMenuOpen(!isNewPieceMenuOpen)} onSave = {addPiece} />
