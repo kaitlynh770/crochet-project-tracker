@@ -16,10 +16,19 @@ function NewProject(){
         setNewPieceMenuOpen(!isNewPieceMenuOpen)
     }
     const addPiece = (piece) =>{
-        setPieces(pieces => [...pieces, piece])
+        const pieceId = {...piece, id: Date.now()}
+        setPieces(pieces => [...pieces, pieceId])
         // console.log(pieces[0])
         setNewPieceMenuOpen(false)
     }
+
+    const editPiece = (piece) => {
+        //open back up the NewPiece menu and autopopulate the fields with the information currently in the piece
+    }
+
+    const deletePiece = (id) => {
+        setPieces(pieces => pieces.filter(piece => piece.id !== id));
+    };
 
     useEffect(() => { //check pieces array when it updates
         if (pieces.length > 0) {
@@ -53,7 +62,7 @@ function NewProject(){
                                 <label>Pieces</label>
                                 <div className = {styles.pieces_container}>
                                     {pieces.map((piece, index) => (
-                                        <div key = {index} className = {styles.pieces}>
+                                        <div key = {piece.id} className = {styles.pieces}>
                                             <Piece
                                                 name = {piece.pieceName}
                                                 rounds = {piece.pieceRounds}
@@ -61,7 +70,7 @@ function NewProject(){
                                             />
                                             <div className = {styles.buttons}>
                                                 <img src = {edit_icon} />
-                                                <img src = {delete_icon} />
+                                                <img src = {delete_icon} onClick = {() => deletePiece(piece.id)}/>
                                             </div>
                                             {index === pieces.length-1 && (
                                                 <button className = {styles.fab} onClick = {toggleMenu} type= "button">+</button>
