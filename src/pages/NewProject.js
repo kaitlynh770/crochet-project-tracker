@@ -63,6 +63,9 @@ function NewProject(){
                                                 <img src = {edit_icon} />
                                                 <img src = {delete_icon} />
                                             </div>
+                                            {index === pieces.length-1 && (
+                                                <button className = {styles.fab}>+</button>
+                                            )}
                                         </div>
                                     ))}
                                 </div>
