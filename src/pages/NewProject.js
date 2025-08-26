@@ -10,19 +10,30 @@ function NewProject(){
     const [projectName, setProjectName] = useState("");
     const [notes, setNotes] = useState("");
     const [isNewPieceMenuOpen, setNewPieceMenuOpen] = useState(false);
+    const [editPieceId, setEditId] = useState(null);
     const [pieces, setPieces] = useState([]) //array to store pieces of a project, this information will be sent to us from the NewPiece menu
 
     const toggleMenu = () =>{
         setNewPieceMenuOpen(!isNewPieceMenuOpen)
     }
     const addPiece = (piece) =>{
-        const pieceId = {...piece, id: Date.now()}
-        setPieces(pieces => [...pieces, pieceId])
+        if(editPieceId){
+            setPieces(pieces =>
+                pieces.map(p => p.id === editPieceId ? { ...piece, id: editPieceId } : p)
+            );
+        }
+        else{
+            const pieceId = {...piece, id: Date.now()}
+            setPieces(pieces => [...pieces, pieceId])
+        }
         // console.log(pieces[0])
-        setNewPieceMenuOpen(false)
+        setNewPieceMenuOpen(false);
+        setEditId(null);
     }
 
-    const editPiece = (piece) => {
+    const editPiece = (id) => {
+        setEditId(id);
+        setNewPieceMenuOpen(true);
         //open back up the NewPiece menu and autopopulate the fields with the information currently in the piece
     }
 
@@ -35,6 +46,7 @@ function NewProject(){
             console.log('First piece:', pieces[0]);
         }
     }, [pieces]);
+    const pieceToEdit = pieces.find(piece => piece.id === editPieceId);
     return(
             <div className ={styles.form}>
                 <form className={styles.new_project}>
@@ -69,7 +81,7 @@ function NewProject(){
                                                 quantity = {piece.pieceQuantity}
                                             />
                                             <div className = {styles.buttons}>
-                                                <img src = {edit_icon} />
+                                                <img src = {edit_icon} onClick = {() => editPiece(piece.id)} />
                                                 <img src = {delete_icon} onClick = {() => deletePiece(piece.id)}/>
                                             </div>
                                             {index === pieces.length-1 && (
@@ -83,7 +95,14 @@ function NewProject(){
                         {pieces.length > 0 ? (<button className = {styles.add_piece} type = "button">Create Project</button>) : (<button onClick = {toggleMenu} className={styles.add_piece} type = "button">Add Piece</button>)}
                 </form>
                 {isNewPieceMenuOpen && (
-                    <NewPiece onClose={() => setNewPieceMenuOpen(!isNewPieceMenuOpen)} onSave = {addPiece} />
+                    <NewPiece
+                        initialData = {pieceToEdit}
+                        onClose={() => {
+                            setNewPieceMenuOpen(!isNewPieceMenuOpen);
+                            setEditId(null);
+                        }}
+                        onSave = {addPiece}
+                     />
                 )}
             </div>
     )

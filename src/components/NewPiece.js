@@ -2,11 +2,11 @@ import {useEffect, useRef, useState} from 'react';
 import ReactDOM from 'react-dom/client';
 import styles from './NewPiece.module.scss'
 
-function NewPiece({onClose, onSave}){
-    const [pieceName, setPieceName] = useState("");
-    const [pieceQuantity, setPieceQuantity] = useState(1);
+function NewPiece({initialData, onClose, onSave}){
+    const [pieceName, setPieceName] = useState(initialData?.pieceName || "");
+    const [pieceQuantity, setPieceQuantity] = useState(initialData?.pieceQuantity || 1);
     const quantity = [1,2,3,4,5]
-    const [pieceRounds, setPieceRounds] = useState("");
+    const [pieceRounds, setPieceRounds] = useState(initialData?.pieceRounds || "");
     function savePiece(e){
         e.preventDefault();
         if(!pieceName || pieceRounds == ""){
