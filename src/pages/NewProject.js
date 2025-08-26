@@ -10,25 +10,27 @@ function NewProject(){
     const [projectName, setProjectName] = useState("");
     const [notes, setNotes] = useState("");
     const [isNewPieceMenuOpen, setNewPieceMenuOpen] = useState(false);
-    const [editPieceId, setEditId] = useState(null);
+    const [editPieceId, setEditId] = useState(null); //store the piece that will be edited
     const [pieces, setPieces] = useState([]) //array to store pieces of a project, this information will be sent to us from the NewPiece menu
 
     const toggleMenu = () =>{
         setNewPieceMenuOpen(!isNewPieceMenuOpen)
     }
-    const addPiece = (piece) =>{
-        if(editPieceId){
-            setPieces(pieces =>
-                pieces.map(p => p.id === editPieceId ? { ...piece, id: editPieceId } : p)
+    const addOrEditPiece = (piece) =>{
+        if(editPieceId){ //if there is something within editPieceId,
+            setPieces(pieces => //map through the pieces array create a new one to update the state
+                pieces.map(p => p.id === editPieceId ? { ...piece, id: editPieceId } : p) //iterate over each piece in the array and if the iterated id is the same as the editPieceId, update the newly change piece to have the same id as the editPieceId
+                //{...piece, id:editPieceId} creates a new object that has all the properties from piece but the id property is set to the editPieceId.
+                //esssentially we're replacing the piece with updated data but keeping the id the same
+                //second half of the statement just keeps the piece object the way it is if it is the one not currently being updated
             );
         }
-        else{
-            const pieceId = {...piece, id: Date.now()}
-            setPieces(pieces => [...pieces, pieceId])
+        else{ //adding a new piece
+            const pieceId = {...piece, id: Date.now()} //create a unique ID based off of the current date
+            setPieces(pieces => [...pieces, pieceId]) //create a shallow copy of the array with the new piece
         }
-        // console.log(pieces[0])
         setNewPieceMenuOpen(false);
-        setEditId(null);
+        setEditId(null); //clear editPieceId to get ready for the next piece that wants to be updated
     }
 
     const editPiece = (id) => {
@@ -101,7 +103,7 @@ function NewProject(){
                             setNewPieceMenuOpen(!isNewPieceMenuOpen);
                             setEditId(null);
                         }}
-                        onSave = {addPiece}
+                        onSave = {addOrEditPiece}
                      />
                 )}
             </div>
