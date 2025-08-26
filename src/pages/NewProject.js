@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import styles from '../pages_styling/NewProject.module.scss';
 import NewPiece  from '../components/NewPiece'
 import Piece from '../components/Piece';
+import edit_icon from '../assets/edit-button.png';
+import delete_icon from '../assets/delete-button.png';
 
 function NewProject(){
     const [projectName, setProjectName] = useState("");
@@ -57,6 +59,10 @@ function NewProject(){
                                                 rounds = {piece.pieceRounds}
                                                 quantity = {piece.pieceQuantity}
                                             />
+                                            <div className = {styles.buttons}>
+                                                <img src = {edit_icon} />
+                                                <img src = {delete_icon} />
+                                            </div>
                                         </div>
                                     ))}
                                 </div>

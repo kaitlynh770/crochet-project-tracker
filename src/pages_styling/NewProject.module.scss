@@ -69,12 +69,14 @@
 
 .pieces{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   background: #ffff;
   box-sizing: border-box;
   border-radius: 6px;
   border: 1.5px solid #f5c6df;
   box-shadow: 0 4px 16px 0 #eadde5;
+  width: 140px;
+  text-align: left;
 
 }
 .pieces_container{
@@ -84,6 +86,19 @@
     gap: 16px;              /* Space between pieces */
     justify-content: flex-start;
 }
+.buttons{
+  display: flex;
+  flex-direction: row;
+  margin-top: auto;
+
+  img{
+    object-fit: contain;
+    width: 20%;
+    margin: 12px 8px;
+    cursor: pointer;
+  }
+}
+
 
 // --- Centered, full-width button ---
 .add_piece {
