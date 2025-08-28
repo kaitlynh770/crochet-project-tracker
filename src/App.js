@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import NavBar from './components/NavBar';
+import ProjectsPage from './components/ProjectsPage';
 import NewProject from './pages/NewProject';
 import AllProjects from './pages/AllProjects';
 import { Routes, Route } from 'react-router-dom';
@@ -11,10 +12,11 @@ function App() {
       <div className = "navigate">
         <NavBar />
         <div className = "main-content">
-          <Routes>
+          {/* <Routes>
             <Route path = "/projects" element = {<AllProjects />} />
             <Route path = "projects/new" element = {<NewProject />} />
-          </Routes>
+          </Routes> */}
+          <ProjectsPage />
         </div>
       </div>
     </div>

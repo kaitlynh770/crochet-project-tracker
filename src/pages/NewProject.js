@@ -2,11 +2,12 @@ import {useState, useEffect} from 'react';
 import ReactDOM from 'react-dom/client';
 import styles from '../pages_styling/NewProject.module.scss';
 import NewPiece  from '../components/NewPiece'
+import miffy from '../assets/miffy_keychain.jpeg'
 import Piece from '../components/Piece';
 import edit_icon from '../assets/edit-button.png';
 import delete_icon from '../assets/delete-button.png';
 
-function NewProject(){
+function NewProject({onSave}){
     const [projectName, setProjectName] = useState("");
     const [notes, setNotes] = useState("");
     const [isNewPieceMenuOpen, setNewPieceMenuOpen] = useState(false);
@@ -42,6 +43,16 @@ function NewProject(){
     const deletePiece = (id) => {
         setPieces(pieces => pieces.filter(piece => piece.id !== id));
     };
+
+    const saveProject = () => {
+        const newProjectObject = {projectImg: miffy, name: projectName, pieces: pieces};
+        onSave(newProjectObject)
+        console.log('Saving project:', newProjectObject); // <-- Add this
+        setProjectName('')
+        setNotes('')
+        setPieces([])
+        //onSave(newProjectObject);
+    }
 
     useEffect(() => { //check pieces array when it updates
         if (pieces.length > 0) {
@@ -94,7 +105,7 @@ function NewProject(){
                                 </div>
                             </div>
                         }
-                        {pieces.length > 0 ? (<button className = {styles.add_piece} type = "button">Create Project</button>) : (<button onClick = {toggleMenu} className={styles.add_piece} type = "button">Add Piece</button>)}
+                        {pieces.length > 0 ? (<button className = {styles.add_piece} type = "button" onClick = {saveProject}>Create Project</button>) : (<button onClick = {toggleMenu} className={styles.add_piece} type = "button">Add Piece</button>)}
                 </form>
                 {isNewPieceMenuOpen && (
                     <NewPiece

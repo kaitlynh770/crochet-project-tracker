@@ -6,13 +6,13 @@ import styles from './Project.module.scss'
 //photo, name, pieces Piece[]
 function Project({projectImg, name, pieces}){
     let [details, showDetails] = useState(false) //showing details of a project should initially be set to false
-    console.log(`${name} details state:`, details)
-        console.log(`=== ${name} ===`)
-    console.log(`Current details state: ${details}`)
+    // console.log(`${name} details state:`, details)
+    //     console.log(`=== ${name} ===`)
+    // console.log(`Current details state: ${details}`)
 
     const handleButtonClick = () => {
-        console.log(`🔴 BUTTON CLICKED for: ${name}`)
-        console.log(`🔴 Before toggle - ${name} state: ${details}`)
+        // console.log(`🔴 BUTTON CLICKED for: ${name}`)
+        // console.log(`🔴 Before toggle - ${name} state: ${details}`)
         showDetails(!details)
     }
     return(
