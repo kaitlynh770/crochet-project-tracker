@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import ReactDOM from 'react-dom/client';
 import styles from '../pages_styling/NewProject.module.scss';
 import NewPiece  from '../components/NewPiece'
@@ -13,6 +13,31 @@ function NewProject({onSave}){
     const [isNewPieceMenuOpen, setNewPieceMenuOpen] = useState(false);
     const [editPieceId, setEditId] = useState(null); //store the piece that will be edited
     const [pieces, setPieces] = useState([]) //array to store pieces of a project, this information will be sent to us from the NewPiece menu
+    const notesRef = useRef(null);
+
+    const keyDownBulletPoints = (e) => {
+        if(e.key === 'Enter'){
+            e.preventDefault();
+            const { selectionStart, selectionEnd, value} = e.target;
+            const before = value.substring(0, selectionStart);
+            const after = value.substring(selectionEnd);
+            const newValue = before + '\n• ' + after;
+            setNotes(newValue);
+            setTimeout(() => {
+                const position = before.length + 3
+                if(notesRef.current){
+                    notesRef.current.selectionStart = notesRef.current.selectionEnd = position;
+                }
+            }, 0)
+
+        }
+    };
+
+    const handleNotesFocus = () => {
+        if(!notes.startsWith('• ')){
+            setNotes('• ' + notes);
+        }
+    }
 
     const toggleMenu = () =>{
         setNewPieceMenuOpen(!isNewPieceMenuOpen)
@@ -77,9 +102,12 @@ function NewProject({onSave}){
                         <div className={styles["field-container"]}>
                             <label>Overall Notes</label>
                             <textarea
+                            ref = {notesRef}
                             className={styles.notes}
                             value={notes}
                             onChange={e => setNotes(e.target.value)}
+                            onKeyDown={keyDownBulletPoints}
+                            onFocus = {handleNotesFocus}
                             />
                         </div>
                         {pieces.length > 0 &&

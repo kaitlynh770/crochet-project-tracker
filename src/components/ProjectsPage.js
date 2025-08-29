@@ -59,31 +59,12 @@ function ProjectsPage () {
             ...previous,
             {...project, id:Date.now(), pieces: normalizedPieces}
         ])
-        // setProjects(previous => [
-        //     ...previous,
-        //     {...project, id:Date.now()}
-        // ])
         alert("Project sucessfully added!");
-        console.log(
-            `Project being added is called: ${project.name} with ${project.pieces.length} pieces which include ${project.pieces[0].pieceQuantity} ${project.pieces[0].pieceName} with ${project.pieces[0].pieceRounds} rounds.`
-        );
-        if (project.pieces && project.pieces.length > 0) {
-            console.log(
-                `Project being added is called: ${project.name} with ${project.pieces.length} pieces which include ${project.pieces[0].quantity} ${project.pieces[0].name} with ${project.pieces[0].rounds} rounds.`
-            );
-            console.log("First piece object:", project.pieces[0]);
-        }
-        else {
-            console.log("No pieces found in project.pieces");
-        }
+        console.log({project});
     }
 
     return (
-        // <div>
-        //     <NewProject onSave = {addProject} />
-        //     <AllProjects projects = {projects} />
-        // </div>
-                <div className = "main-content">
+        <div className = "main-content">
           <Routes>
             <Route path = "/projects" element = {<AllProjects projects = {projects}/>} />
             <Route path = "projects/new" element = {<NewProject onSave = {addProject} />} />
