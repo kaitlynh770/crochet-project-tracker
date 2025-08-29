@@ -2,12 +2,12 @@ import {useState} from 'react';
 import NewProject from "../pages/NewProject"
 import AllProjects from '../pages/AllProjects';
 import '../global_styles/global.scss'
-import Project from "./Project"
 import miffy from '../assets/miffy_keychain.jpeg'
 import my_melody from '../assets/my_melodys.jpg'
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 
 function ProjectsPage () {
+    const navigate = useNavigate();
     const [projects, setProjects] = useState([
         {
             id: 1,
@@ -23,7 +23,8 @@ function ProjectsPage () {
                     rounds: 6,
                     quantity: 2
                 }
-            ]
+            ],
+            notes: ""
         },
         {
             id: 2,
@@ -44,7 +45,8 @@ function ProjectsPage () {
                     rounds: 12,
                     quantity: 2
                 }
-            ]
+            ],
+            notes: ""
         }
     ])
 
@@ -61,6 +63,7 @@ function ProjectsPage () {
         ])
         alert("Project sucessfully added!");
         console.log({project});
+        navigate('/projects');
     }
 
     return (

@@ -71,7 +71,11 @@ function NewProject({onSave}){
     };
 
     const saveProject = () => {
-        const newProjectObject = {projectImg: miffy, name: projectName, pieces: pieces};
+        if(!projectName){
+            alert('Please fill out project name!');
+            return
+        }
+        const newProjectObject = {projectImg: miffy, name: projectName, pieces: pieces, notes: notes};
         onSave(newProjectObject)
         console.log('Saving project:', newProjectObject); // <-- Add this
         setProjectName('')

@@ -3,8 +3,8 @@ import Piece from './Piece';
 import styles from './Project.module.scss'
 
 //this is going to be what a project is made up of
-//photo, name, pieces Piece[]
-function Project({projectImg, name, pieces}){
+//photo, name, pieces Piece[], notes
+function Project({projectImg, name, pieces, notes = ""}){
     let [details, showDetails] = useState(false) //showing details of a project should initially be set to false
     // console.log(`${name} details state:`, details)
     //     console.log(`=== ${name} ===`)
