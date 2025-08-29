@@ -13,27 +13,28 @@ function NewProject({onSave}){
     const [isNewPieceMenuOpen, setNewPieceMenuOpen] = useState(false);
     const [editPieceId, setEditId] = useState(null); //store the piece that will be edited
     const [pieces, setPieces] = useState([]) //array to store pieces of a project, this information will be sent to us from the NewPiece menu
-    const notesRef = useRef(null);
+    const notesRef = useRef(null); //create a reference to the notes textarea
 
-    const keyDownBulletPoints = (e) => {
+    const keyDownBulletPoints = (e) => { //function to have every new line start with a bullet point when user hits enter
         if(e.key === 'Enter'){
-            e.preventDefault();
-            const { selectionStart, selectionEnd, value} = e.target;
+            e.preventDefault(); //this will prevent the default new line behavior
+            const { selectionStart, selectionEnd, value} = e.target; //destructuring properties from the textarea input
+            //here we're splitting value into 2 parts: before and after the cursor
             const before = value.substring(0, selectionStart);
             const after = value.substring(selectionEnd);
-            const newValue = before + '\n• ' + after;
-            setNotes(newValue);
-            setTimeout(() => {
+            const newValue = before + '\n• ' + after; //insert a new line with a bullet point at the cursor's position
+            setNotes(newValue); //make sure to update notes with this value
+            setTimeout(() => { //timeout is used to position the cursor after notes is updated
                 const position = before.length + 3
                 if(notesRef.current){
                     notesRef.current.selectionStart = notesRef.current.selectionEnd = position;
                 }
-            }, 0)
+            }, 0) //run this piece of code as soon as the DOM updates
 
         }
     };
 
-    const handleNotesFocus = () => {
+    const handleNotesFocus = () => { //when the user hasn't typed anything yet, make sure it automatically starts with a •
         if(!notes.startsWith('• ')){
             setNotes('• ' + notes);
         }
