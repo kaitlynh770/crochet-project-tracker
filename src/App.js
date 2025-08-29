@@ -12,10 +12,6 @@ function App() {
       <div className = "navigate">
         <NavBar />
         <div className = "main-content">
-          {/* <Routes>
-            <Route path = "/projects" element = {<AllProjects />} />
-            <Route path = "projects/new" element = {<NewProject />} />
-          </Routes> */}
           <ProjectsPage />
         </div>
       </div>

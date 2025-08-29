@@ -6,13 +6,9 @@ import styles from './Project.module.scss'
 //photo, name, pieces Piece[], notes
 function Project({projectImg, name, pieces, notes = ""}){
     let [details, showDetails] = useState(false) //showing details of a project should initially be set to false
-    // console.log(`${name} details state:`, details)
-    //     console.log(`=== ${name} ===`)
-    // console.log(`Current details state: ${details}`)
 
-    const handleButtonClick = () => {
-        // console.log(`🔴 BUTTON CLICKED for: ${name}`)
-        // console.log(`🔴 Before toggle - ${name} state: ${details}`)
+    const handleButtonClick = (e) => {
+        e.stopPropagation(); //prevent event bubbling, specifically prevent the navigation from happening when clicking the toggle button
         showDetails(!details)
     }
     return(

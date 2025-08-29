@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import NewProject from "../pages/NewProject"
 import AllProjects from '../pages/AllProjects';
+import ProjectDetails from '../pages/ProjectDetails';
 import '../global_styles/global.scss'
 import miffy from '../assets/miffy_keychain.jpeg'
 import my_melody from '../assets/my_melodys.jpg'
@@ -71,6 +72,7 @@ function ProjectsPage () {
           <Routes>
             <Route path = "/projects" element = {<AllProjects projects = {projects}/>} />
             <Route path = "projects/new" element = {<NewProject onSave = {addProject} />} />
+            <Route path = "projects/:projectId" element = {<ProjectDetails projects = {projects} />} />
           </Routes>
         </div>
     )
