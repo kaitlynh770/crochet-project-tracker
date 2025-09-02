@@ -1,4 +1,5 @@
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom';
+import styles from '../pages_styling/ProjectDetails.module.scss';
 function ProjectDetails({projects}){
     console.log(projects)
     const { projectId } = useParams();
@@ -9,11 +10,19 @@ function ProjectDetails({projects}){
     if(!project) return <div>Project not found!</div>;
     console.log(project)
     return(
+    <div className = {styles.project_details}>
+        <h1>{project.name} Pattern</h1>
         <div>
-            <h1>
-                {project.name}
-            </h1>
+            {project.pieces.map((p, idx) => (
+            <div key={idx}>
+                <p>Name: {p.name}</p>
+                <p>Rounds: {p.rounds}</p>
+                {p.quantity && <p>Quantity: {p.quantity}</p>}
+            </div>
+            ))}
         </div>
+        {project.notes && <p>Notes: {project.notes}</p>}
+    </div>
     )
 }
 export default ProjectDetails
