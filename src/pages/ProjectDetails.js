@@ -1,82 +1,134 @@
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import styles from '../pages_styling/ProjectDetails.module.scss';
-function ProjectDetails({projects}){
-    console.log(projects)
-    const [roundsCompleted, setRoundsCompleted] = useState([]); //rounds is an array of arrays that is one per piece with booleans for each of the rounds
-    //outer array represents the piece and the inner array represents the state of the rounds
-    //[
-    //  [true, false, false, false, false, false],    this first array refers to piece #1 (like an arm) the values inside refer to the state of each round (first round is completed, the rest of the rounds aren't completed yet)
-    //  [false, false, false, false, false false]     piece #2
-    //]
-    const { projectId } = useParams();
-    const id = Number(projectId)
-    const project = projects.find(p => p.id === id);
-    console.log('projectId from params:', projectId, typeof projectId);
-    console.log('project ids:', projects.map(p => typeof p.id));
-        useEffect(() => {
-        if(project && project.pieces){ //when we have a valid project and we know how many pieces there are in the project, we can map and fill it all with false to initialize it
-            setRoundsCompleted( //go thorugh the rounds array and for each round in a piece, we're going to create an array of the same number of rounds for each piece and fill it with false
-                project.pieces.map(piece => Array(piece.rounds).fill(false))
-            )
-        }
-    }, [project]) //project doesn't change so this'll only happen when everything is being loaded in (ideally)
 
-    const handleRoundClick = (pieceIdx, roundIdx) => {
-        setRoundsCompleted(prev => //prev refers to the previous state of the array of pieces + their rounds
-            prev.map((pieceRounds, idx) =>
-            idx === pieceIdx //this is the piece we want to update (the one we're clicking the rounds on)
-                ? pieceRounds.map((completed, rIdx) =>
-                (rIdx === roundIdx //if this is the round we wanna toggle
-                ? !completed : completed)) //toggle the completion state otherwise leave it alone
-                : pieceRounds //if this isn't the piece we're looking for, just leave it alone
-            )
-        );
-    };
-    if(!project) return <div>Project not found!</div>;
+function ProjectDetails({ projects }) {
+  const [roundsCompleted, setRoundsCompleted] = useState([]); //create an array of arrays (so a 2d array) where each row represents a piece and it's rounds
+  //[
+  // [true, true, false, false, false]      this refers to piece 1 with 2 rounds completed
+  // [false, false, false, false, false]    this refers to piecee 2 with 0 rounds completed
+  //]
+  const { projectId } = useParams(); //get the projectId via parameters
+  const id = Number(projectId); //convert it to a number because that's how its stored in the project object
+  const project = projects.find(p => p.id === id); //find the project we're clicking on based off of the id passed to us
 
-    //check if all the rounds in a piece at pieceIdx are completed
-    const isPieceComplete = pieceIdx => { //takes in the current index of our piece in the roundsCompleted array
-        return roundsCompleted[pieceIdx] ? roundsCompleted[pieceIdx].every(Boolean) : false; //ternary oprator, .every(Boolean) method checks if every element of the array is truthy
-        //if anything in the array is found as false, it returns false
-    };
-    //when it comes to the progress bar, we're counting the number of true values in the roundsCompleted array to see a user's progress on the piece
-    return(
-    <div className = {styles.project_details}>
-        <h1>{project.name} Pattern</h1>
-        <div>
-            {project.pieces.map((p, idx) => (
+  // Expand pieces by quantity with displayName and keep originalName
+  const expandedPieces = useMemo(() => { //we need to calcuate which pieces will need to be expanded or not, this is something that won't really change too so using useMemo is a great option for this. We wouldn't want this calculation (creating the newArray with expanded pieces) calculated everytime on a render so we should Memoize it so it's cached and ONLY changes if project changes (which it won't)
+    if (!project || !project.pieces) return []; //safety check, if there is no project or no pieces then return
+    return project.pieces.flatMap(piece => //this is a method that both maps and flattens (merges nested arrays into one array)
+      Array.from({ length: piece.quantity }, (_, i) => ({ //so for each piece in the project.pieces array, we're going to create another array that's the lengh of that piece's quantity
+        ...piece,
+        displayName: piece.quantity > 1 ? `${piece.name} ${i + 1}` : piece.name, //if the quantity is more than 1 than we label it as {piece} {quantity} else if it's just one, just show the name
+        originalName: piece.name,
+        quantity: piece.quantity,
+      }))
+    );
+  }, [project]);
+  //so basically what's happening in the flatMap is that if a piece has a quantity larger than 1 (let's use ears for an example, there's 2 ears) the flatMap and Array.from will now split Ears into 2 separate pieces: Ear 1 and Ear 2
+  //the expanded pieces are still being grouped via the original piece name (called originalName)
+
+  useEffect(() => {
+    if (expandedPieces.length > 0) {
+      setRoundsCompleted(
+        expandedPieces.map(piece => Array(piece.rounds).fill(false))
+      );
+    }
+  }, [expandedPieces]);
+
+  const handleRoundClick = (pieceIdx, roundIdx) => {
+    setRoundsCompleted(prev =>
+      prev.map((pieceRounds, idx) =>
+        idx === pieceIdx
+          ? pieceRounds.map((completed, rIdx) =>
+              rIdx === roundIdx ? !completed : completed
+            )
+          : pieceRounds
+      )
+    );
+  };
+
+  const isPieceComplete = pieceIdx =>
+    roundsCompleted[pieceIdx] ? roundsCompleted[pieceIdx].every(Boolean) : false;
+
+  // Group expanded pieces by originalName
+  const groupedPieces = useMemo(() => {
+    const groups = {};
+    expandedPieces.forEach((piece, idx) => {
+      if (!groups[piece.originalName]) {
+        groups[piece.originalName] = [];
+      }
+      groups[piece.originalName].push({ ...piece, expandedIdx: idx });
+    });
+    return groups;
+  }, [expandedPieces]);
+
+  // Helper to check if all sub-pieces in a group are complete
+  const isGroupComplete = (pieces) => {
+    return pieces.every(p => isPieceComplete(p.expandedIdx));
+  };
+
+  if (!project) return <div>Project not found!</div>;
+
+  return (
+    <div className={styles.project_details}>
+      <h1>{project.name} Pattern</h1>
+      <div>
+        {Object.entries(groupedPieces).map(([originalName, pieces]) => {
+          const groupComplete = isGroupComplete(pieces);
+          return (
+            <div key={originalName} style={{ marginBottom: '1.5rem' }}>
+              {/* Show piece name once if quantity > 1, greyed out if all sub-pieces complete */}
+              {pieces[0].quantity > 1 ? (
+                <h2 style={{ opacity: groupComplete ? 0.5 : 1 }}>{originalName}</h2>
+              ) : null}
+              {/* Render sub-pieces */}
+              {pieces.map((p, idx) => (
                 <div
-                    key={idx}
-                    style={{
-                    opacity: isPieceComplete(idx) ? 0.5 : 1
-                    }}
+                  key={idx}
+                  style={{
+                    opacity: isPieceComplete(p.expandedIdx) ? 0.5 : 1,
+                    marginLeft: pieces[0].quantity > 1 ? '1.5rem' : 0,
+                    marginBottom: '1rem',
+                  }}
                 >
-                    <h2>{p.name} (make {p.quantity})</h2>
-                    <div className={styles.round_text}>
+                  {/* If quantity > 1, show displayName (e.g., Ear 1), else just name */}
+                  <h3>{pieces[0].quantity > 1 ? p.displayName : p.name}</h3>
+                  <div className={styles.round_text}>
                     <p>Total Rounds: {p.rounds}</p>
-                    <p>Progress: {roundsCompleted[idx]?.filter(Boolean).length || 0} of {p.rounds}</p>
+                    <p>
+                      Progress:{' '}
+                      {roundsCompleted[p.expandedIdx]?.filter(Boolean).length || 0} of{' '}
+                      {p.rounds}
+                    </p>
                     <div className={styles.rounds_container}>
-                        {[...Array(p.rounds)].map((_, i) => (
+                      {[...Array(p.rounds)].map((_, i) => (
                         <button
-                            key={i}
-                            className={
-                            roundsCompleted[idx] && roundsCompleted[idx][i]
-                                ? styles.rounds_clicked
-                                : styles.rounds_unclicked
-                            }
-                            onClick={() => handleRoundClick(idx, i)}
+                          key={i}
+                          className={
+                            roundsCompleted[p.expandedIdx] &&
+                            roundsCompleted[p.expandedIdx][i]
+                              ? styles.rounds_clicked
+                              : styles.rounds_unclicked
+                          }
+                          onClick={() => handleRoundClick(p.expandedIdx, i)}
                         >
-                            {roundsCompleted[idx] && roundsCompleted[idx][i] ? '✓' : `${i + 1}`}
+                          {roundsCompleted[p.expandedIdx] &&
+                          roundsCompleted[p.expandedIdx][i]
+                            ? '✓'
+                            : `${i + 1}`}
                         </button>
-                        ))}
+                      ))}
                     </div>
-                    </div>
+                  </div>
                 </div>
-                ))}
-        </div>
-        {project.notes && <p>Notes: {project.notes}</p>}
+              ))}
+            </div>
+          );
+        })}
+      </div>
+      {project.notes && <p>Notes: {project.notes}</p>}
     </div>
-    )
+  );
 }
-export default ProjectDetails
+
+export default ProjectDetails;
