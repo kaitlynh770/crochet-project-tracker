@@ -7,4 +7,54 @@
         font-weight: bold;
         font-size: 3vw;
     }
+
+    h2{
+        text-align: left;
+        font-weight: bold;
+        font-size: 2vw;
+    }
+}
+.round_text{
+    text-align: left;
+    font-weight: bold;
+    font-size: 1vw;
+    margin-left: 2vw;
+}
+.rounds_container{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+.rounds_unclicked{
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    aspect-ratio: 1;
+    margin: 20px;
+    cursor: pointer;
+    background-color: transparent;
+    font-size: 1vw;
+
+    &:hover{
+        background-color: #DFEBF4;
+        border: none;
+        color: white;
+    }
+}
+.rounds_clicked{
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    aspect-ratio: 1;
+    margin: 20px;
+    cursor: pointer;
+    background-color: #DFEBF4;
+    font-size: 1vw;
+    border:none;
+
+    &:hover{
+        background-color: transparent;
+        color: black;
+        border: black;
+    }
 }

@@ -18,6 +18,7 @@ function ProjectsPage () {
                 {
                     name: 'Head',
                     rounds: 10,
+                    quantity: 1
                 },
                 {
                     name: 'Ears',
@@ -34,7 +35,8 @@ function ProjectsPage () {
             pieces: [
                 {
                     name: 'Head',
-                    rounds: 15
+                    rounds: 15,
+                    quantity: 1
                 },
                 {
                     name: 'Arms',
