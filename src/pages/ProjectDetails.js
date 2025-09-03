@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import styles from '../pages_styling/ProjectDetails.module.scss';
 function ProjectDetails({projects}){
     console.log(projects)
-    const [clicked, setClicked] = useState(false)
     const [roundsCompleted, setRoundsCompleted] = useState([]); //rounds is an array of arrays that is one per piece with booleans for each of the rounds
     //outer array represents the piece and the inner array represents the state of the rounds
     //[
@@ -17,27 +16,29 @@ function ProjectDetails({projects}){
     console.log('project ids:', projects.map(p => typeof p.id));
         useEffect(() => {
         if(project && project.pieces){ //when we have a valid project and we know how many pieces there are in the project, we can map and fill it all with false to initialize it
-            setRoundsCompleted(
+            setRoundsCompleted( //go thorugh the rounds array and for each round in a piece, we're going to create an array of the same number of rounds for each piece and fill it with false
                 project.pieces.map(piece => Array(piece.rounds).fill(false))
             )
         }
-    }, [project])
+    }, [project]) //project doesn't change so this'll only happen when everything is being loaded in (ideally)
 
     const handleRoundClick = (pieceIdx, roundIdx) => {
-        setRoundsCompleted(prev =>
+        setRoundsCompleted(prev => //prev refers to the previous state of the array of pieces + their rounds
             prev.map((pieceRounds, idx) =>
-            idx === pieceIdx
-                ? pieceRounds.map((completed, rIdx) => (rIdx === roundIdx ? !completed : completed))
-                : pieceRounds
+            idx === pieceIdx //this is the piece we want to update (the one we're clicking the rounds on)
+                ? pieceRounds.map((completed, rIdx) =>
+                (rIdx === roundIdx //if this is the round we wanna toggle
+                ? !completed : completed)) //toggle the completion state otherwise leave it alone
+                : pieceRounds //if this isn't the piece we're looking for, just leave it alone
             )
         );
     };
     if(!project) return <div>Project not found!</div>;
-    console.log(project)
-    console.log(clicked);
 
-    const isPieceComplete = pieceIdx => {
-        return roundsCompleted[pieceIdx] ? roundsCompleted[pieceIdx].every(Boolean) : false;
+    //check if all the rounds in a piece at pieceIdx are completed
+    const isPieceComplete = pieceIdx => { //takes in the current index of our piece in the roundsCompleted array
+        return roundsCompleted[pieceIdx] ? roundsCompleted[pieceIdx].every(Boolean) : false; //ternary oprator, .every(Boolean) method checks if every element of the array is truthy
+        //if anything in the array is found as false, it returns false
     };
     return(
     <div className = {styles.project_details}>
