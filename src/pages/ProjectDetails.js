@@ -40,6 +40,7 @@ function ProjectDetails({projects}){
         return roundsCompleted[pieceIdx] ? roundsCompleted[pieceIdx].every(Boolean) : false; //ternary oprator, .every(Boolean) method checks if every element of the array is truthy
         //if anything in the array is found as false, it returns false
     };
+    //when it comes to the progress bar, we're counting the number of true values in the roundsCompleted array to see a user's progress on the piece
     return(
     <div className = {styles.project_details}>
         <h1>{project.name} Pattern</h1>
@@ -54,7 +55,7 @@ function ProjectDetails({projects}){
                     <h2>{p.name} (make {p.quantity})</h2>
                     <div className={styles.round_text}>
                     <p>Total Rounds: {p.rounds}</p>
-                    <p>Progress: 0 of {p.rounds} completed</p>
+                    <p>Progress: {roundsCompleted[idx]?.filter(Boolean).length || 0} of {p.rounds}</p>
                     <div className={styles.rounds_container}>
                         {[...Array(p.rounds)].map((_, i) => (
                         <button
