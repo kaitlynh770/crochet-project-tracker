@@ -90,6 +90,22 @@ function ProjectDetails({ projects }) {
   return (
     <div className={styles.project_details}>
       <h1>{project.name} Pattern</h1>
+      {/* <img src = {project?.projectImg} /> */}
+        {project.notes &&
+            <div>
+                <h2>
+                    Notes:
+                </h2>
+                <ul>
+                    {project.notes
+                    .split('•')
+                    .map(item => item.trim())
+                    .filter(item => item)
+                    .map((item, idx) =>(
+                        <li key = {idx}>{item}</li>
+                    ))}
+                </ul>
+            </div>}
       <div>
         {Object.entries(groupedPieces).map(([originalName, pieces]) => {
           const groupComplete = isGroupComplete(pieces);
@@ -144,7 +160,6 @@ function ProjectDetails({ projects }) {
           );
         })}
       </div>
-      {project.notes && <p>Notes: {project.notes}</p>}
     </div>
   );
 }
