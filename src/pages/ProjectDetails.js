@@ -85,7 +85,7 @@ function ProjectDetails({ projects }) {
     return pieces.every(p => isPieceComplete(p.expandedIdx));
   };
 
-  if (!project) return <div>Project not found!</div>;
+  if (!project) return <div>Project not found!</div>; //if there isn't a project then we return this statement
 
   return (
     <div className={styles.project_details}>
