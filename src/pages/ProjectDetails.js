@@ -28,38 +28,56 @@ function ProjectDetails({ projects }) {
   //the expanded pieces are still being grouped via the original piece name (called originalName)
 
   useEffect(() => {
-    if (expandedPieces.length > 0) {
-      setRoundsCompleted(
+    if (expandedPieces.length > 0) { //if there's something in the expandedPieces array
+      setRoundsCompleted( //we're going to map through the array and set all the rounds to false
         expandedPieces.map(piece => Array(piece.rounds).fill(false))
       );
     }
-  }, [expandedPieces]);
+  }, [expandedPieces]); //this should only happen once, when the project initially gets loaded in
 
   const handleRoundClick = (pieceIdx, roundIdx) => {
-    setRoundsCompleted(prev =>
+    setRoundsCompleted(prev => //this is referring to the previous state of the pieces array
       prev.map((pieceRounds, idx) =>
-        idx === pieceIdx
+        idx === pieceIdx //if this is the piece we're looking for
           ? pieceRounds.map((completed, rIdx) =>
-              rIdx === roundIdx ? !completed : completed
+              rIdx === roundIdx ? !completed : completed //if this is the round we're looking to toggle, either change the state or leave it alone
             )
-          : pieceRounds
+          : pieceRounds //if it's not the round we're looking for leave it alone
       )
     );
   };
 
-  const isPieceComplete = pieceIdx =>
-    roundsCompleted[pieceIdx] ? roundsCompleted[pieceIdx].every(Boolean) : false;
+  const isPieceComplete = pieceIdx => //check if the piece is complete
+    roundsCompleted[pieceIdx] ? roundsCompleted[pieceIdx].every(Boolean) : false; //if all rounds for a piece are coming back as true then return true else return false
 
   // Group expanded pieces by originalName
   const groupedPieces = useMemo(() => {
-    const groups = {};
-    expandedPieces.forEach((piece, idx) => {
-      if (!groups[piece.originalName]) {
-        groups[piece.originalName] = [];
+    const groups = {}; //create an empty object called groups
+    expandedPieces.forEach((piece, idx) => { //for each piece in the expanded pieces array
+      if (!groups[piece.originalName]) { //if groups object doesn't have a key for piece.OriginalName
+        groups[piece.originalName] = []; //create an empty array for that piece
       }
-      groups[piece.originalName].push({ ...piece, expandedIdx: idx });
+      groups[piece.originalName].push({ ...piece, expandedIdx: idx }); //if the key does exist, push the the current piece into the group AND the expandedIdx (original index of the piece in expandedPieces)
     });
-    return groups;
+    return groups; //when everything is finished, return groups
+    /*
+    this is what expandedPieces looks like:
+    [
+        { originalName: "Ears", displayName: "Ears 1", ... },
+        { originalName: "Ears", displayName: "Ears 2", ... },
+        { originalName: "Arm", displayName: "Arm", ... }
+    ]
+    and this is what groupedPieces will look like:
+    {
+        "Ears": [
+            { originalName: "Ears", displayName: "Ears 1", expandedIdx: 0, ... },
+            { originalName: "Ears", displayName: "Ears 2", expandedIdx: 1, ... }
+        ],
+        "Arm": [
+            { originalName: "Arm", displayName: "Arm", expandedIdx: 2, ... }
+        ]
+    }
+    */
   }, [expandedPieces]);
 
   // Helper to check if all sub-pieces in a group are complete
