@@ -1,6 +1,8 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState, useMemo } from 'react';
 import styles from '../pages_styling/ProjectDetails.module.scss';
+import complete from '../assets/check-mark.png';
+import redo from '../assets/redo.png';
 
 function ProjectDetails({ projects }) {
   const [roundsCompleted, setRoundsCompleted] = useState([]); //create an array of arrays (so a 2d array) where each row represents a piece and it's rounds
@@ -16,7 +18,7 @@ function ProjectDetails({ projects }) {
   const expandedPieces = useMemo(() => { //we need to calcuate which pieces will need to be expanded or not, this is something that won't really change too so using useMemo is a great option for this. We wouldn't want this calculation (creating the newArray with expanded pieces) calculated everytime on a render so we should Memoize it so it's cached and ONLY changes if project changes (which it won't)
     if (!project || !project.pieces) return []; //safety check, if there is no project or no pieces then return
     return project.pieces.flatMap(piece => //this is a method that both maps and flattens (merges nested arrays into one array)
-      Array.from({ length: piece.quantity }, (_, i) => ({ //so for each piece in the project.pieces array, we're going to create another array that's the lengh of that piece's quantity
+      Array.from({ length: piece.quantity }, (_, i) => ({ //so for each piece in the project.pieces array, we're going to create another array that's the length of that piece's quantity
         ...piece,
         displayName: piece.quantity > 1 ? `${piece.name} ${i + 1}` : piece.name, //if the quantity is more than 1 than we label it as {piece} {quantity} else if it's just one, just show the name
         originalName: piece.name,
@@ -107,8 +109,8 @@ function ProjectDetails({ projects }) {
                 </ul>
             </div>}
       <div>
-        {Object.entries(groupedPieces).map(([originalName, pieces]) => {
-          const groupComplete = isGroupComplete(pieces);
+        {Object.entries(groupedPieces).map(([originalName, pieces]) => { //converts the groupedPieces into key-value pairs ({head: [head1], arms: [arms1, arms2]})
+          const groupComplete = isGroupComplete(pieces); //checks if a group has been completed yet (all rounds are complete)
           return (
             <div key={originalName} style={{ marginBottom: '1.5rem' }}>
               {/* Show piece name once if quantity > 1, greyed out if all sub-pieces complete */}
@@ -126,7 +128,11 @@ function ProjectDetails({ projects }) {
                   }}
                 >
                   {/* If quantity > 1, show displayName (e.g., Ear 1), else just name */}
-                  <h3>{pieces[0].quantity > 1 ? p.displayName : p.name}</h3>
+                  <div className = {styles.piece_interactions}>
+                    <h3>{pieces[0].quantity > 1 ? p.displayName : p.name}</h3>
+                        <img src = {redo} />
+                        <img src = {complete} />
+                  </div>
                   <div className={styles.round_text}>
                     <p>Total Rounds: {p.rounds}</p>
                     <p>

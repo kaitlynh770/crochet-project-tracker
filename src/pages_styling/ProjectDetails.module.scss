@@ -24,11 +24,21 @@
     li{
         text-align: left;
     }
-    img{
-        width: 20%;
-        border-radius: 5%
-    }
 
+}
+.piece_interactions {
+    display: flex;
+    align-items: center; // <-- This is the key change!
+    h3 {
+        margin: 0; // Remove default margin for better alignment
+    }
+    img {
+        height: 20px;
+        width: 20px;
+        margin-left: 0.5rem; // Add spacing between text and icons
+        vertical-align: middle; // Optional, for extra alignment help
+        cursor: pointer; // Optional, if you want them to look clickable
+    }
 }
 .round_text{
     text-align: left;
