@@ -59,6 +59,16 @@ function ProjectDetails({ projects }) {
     )
   }
 
+  const completePiece = (pieceIdx) => {
+    setRoundsCompleted(prev =>
+        prev.map((pieceRounds, idx) =>
+            idx === pieceIdx
+            ? Array(pieceRounds.length).fill(true)
+            : pieceRounds
+        )
+    )
+  }
+
   const isPieceComplete = pieceIdx => //check if the piece is complete
     roundsCompleted[pieceIdx] ? roundsCompleted[pieceIdx].every(Boolean) : false; //if all rounds for a piece are coming back as true then return true else return false
 
@@ -141,7 +151,7 @@ function ProjectDetails({ projects }) {
                   <div className = {styles.piece_interactions}>
                     <h3>{pieces[0].quantity > 1 ? p.displayName : p.name}</h3>
                         <img src = {redo} onClick = {() => redoPiece(p.expandedIdx)} />
-                        <img src = {complete} />
+                        <img src = {complete} onClick = {() => completePiece(p.expandedIdx)}/>
                   </div>
                   <div className={styles.round_text}>
                     <p>Total Rounds: {p.rounds}</p>
