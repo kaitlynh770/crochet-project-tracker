@@ -28,7 +28,7 @@
 }
 .piece_interactions {
     display: flex;
-    align-items: center; // <-- This is the key change!
+    align-items: center; // align items with the name of the piece
     h3 {
         margin: 0; // Remove default margin for better alignment
     }
@@ -36,8 +36,8 @@
         height: 20px;
         width: 20px;
         margin-left: 0.5rem; // Add spacing between text and icons
-        vertical-align: middle; // Optional, for extra alignment help
-        cursor: pointer; // Optional, if you want them to look clickable
+        vertical-align: middle; // just really making sure it's centered
+        cursor: pointer; // clickable
     }
 }
 .round_text{

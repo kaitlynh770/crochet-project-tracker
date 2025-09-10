@@ -49,6 +49,16 @@ function ProjectDetails({ projects }) {
     );
   };
 
+  const redoPiece = (pieceIdx) => {
+    setRoundsCompleted(prev=>
+        prev.map((pieceRounds, idx) =>
+            idx === pieceIdx
+            ? Array(pieceRounds.length).fill(false)
+            : pieceRounds
+        )
+    )
+  }
+
   const isPieceComplete = pieceIdx => //check if the piece is complete
     roundsCompleted[pieceIdx] ? roundsCompleted[pieceIdx].every(Boolean) : false; //if all rounds for a piece are coming back as true then return true else return false
 
@@ -130,7 +140,7 @@ function ProjectDetails({ projects }) {
                   {/* If quantity > 1, show displayName (e.g., Ear 1), else just name */}
                   <div className = {styles.piece_interactions}>
                     <h3>{pieces[0].quantity > 1 ? p.displayName : p.name}</h3>
-                        <img src = {redo} />
+                        <img src = {redo} onClick = {() => redoPiece(p.expandedIdx)} />
                         <img src = {complete} />
                   </div>
                   <div className={styles.round_text}>
