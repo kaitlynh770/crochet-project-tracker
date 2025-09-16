@@ -1,0 +1,28 @@
+.welcome_logout_container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(247, 246, 243, 0.95); // optional, matches your bg
+  padding: 8px 16px;
+  border-radius: 8px;
+  h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  button {
+        cursor: pointer;
+        background-color: transparent;
+        border-width: 0;
+        font-family: inherit;
+        font-size: inherit;
+        font-style: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+        padding: 0;
+  }
+}
