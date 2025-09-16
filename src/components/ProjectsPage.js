@@ -71,7 +71,7 @@ function ProjectsPage ({user, onLogout}) {
 
     return (
         <div className = "main-content">
-            <h3>Welcome back {user.displayName}</h3>
+            <h3>Welcome back, {user.displayName}</h3>
             <button onClick = {onLogout}>Logout</button>
           <Routes>
             <Route path = "/projects" element = {<AllProjects projects = {projects}/>} />

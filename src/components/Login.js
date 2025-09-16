@@ -10,7 +10,8 @@ function Login({setUser}){
     const [userName, setUserName] = useState("");
     const [seeLogin, setSeeLogin] = useState(true);
     const handleNewUser =  async(e) => {
-        e.preventDefault();
+        e.preventDefault(); //helps to stop the page from reloading and losing our information when our form is submitted
+        //pressing the enter key causes a browser to reload and discard all Javascript state and ongoing operations (this is the default behavior)
         try{
             //create a new displayName for the user
             const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
@@ -24,7 +25,8 @@ function Login({setUser}){
             alert(err.message);
         }
     }
-    const handleLogin = async () => { //async function to handle login for users
+    const handleLogin = async (e) => { //async function to handle login for users
+        e.preventDefault();
         try{
             const userCredentials = await signInWithEmailAndPassword(auth, email, password);
             setUser(userCredentials.user)
@@ -35,7 +37,7 @@ function Login({setUser}){
     };
 
     return(
-        <div>
+        <form onSubmit = {seeLogin ? handleLogin : handleNewUser}>
             <div className = {styles.overlay}>
                 <div className = {styles.login_or_create}>
                     {seeLogin ? <h2>Login</h2> : <h2>Sign Up</h2>}
@@ -57,20 +59,13 @@ function Login({setUser}){
                             <input value = {password} onChange = {(e=> setPassword(e.target.value))} placeholder = "password" />
                         </div>
                     </div>
-                    {seeLogin ?
-                        <div className = {styles.account_actions}>
-                            <button className= {styles.authentication} onClick = {handleLogin}>Login</button>
-                            <button className = {styles.redirect} onClick = {() => setSeeLogin(!seeLogin)}>Don't have an account?</button>
-                        </div>
-                        :
-                        <div className = {styles.account_actions}>
-                            <button className= {styles.authentication} onClick = {handleNewUser}>Create Account</button>
-                            <button className = {styles.redirect} onClick = {() => setSeeLogin(!seeLogin)}>Have an account? Login</button>
-                        </div>
-                    }
+                    <div className = {styles.account_actions}>
+                        <button className = {styles.authentication} type = "submit">{seeLogin ? "Login" : "Create Account"}</button>
+                        <button className = {styles.redirect} onClick = {() => setSeeLogin(!seeLogin)}>{seeLogin ? "Dont have an account?" : "Have an account? Login"}</button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
     )
 }
 

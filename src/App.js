@@ -18,7 +18,7 @@ function App() {
       <div className = "navigate">
         <NavBar />
         <div className = "main-content">
-          {!user ? <Login setUser = {setUser} /> : <ProjectsPage user = {user} onLogout={handleLogout}/>}
+          {!user ? <Login setUser = {setUser} /> : <ProjectsPage user = {user} onLogout = {handleLogout}/>}
         </div>
       </div>
     </div>
