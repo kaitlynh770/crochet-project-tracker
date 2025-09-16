@@ -7,7 +7,7 @@ import miffy from '../assets/miffy_keychain.jpeg'
 import my_melody from '../assets/my_melodys.jpg'
 import { Routes, Route, useNavigate } from 'react-router-dom';
 
-function ProjectsPage () {
+function ProjectsPage ({user, onLogout}) {
     const navigate = useNavigate();
     const [projects, setProjects] = useState([
         {
@@ -71,6 +71,8 @@ function ProjectsPage () {
 
     return (
         <div className = "main-content">
+            <h3>Welcome back {user.displayName}</h3>
+            <button onClick = {onLogout}>Logout</button>
           <Routes>
             <Route path = "/projects" element = {<AllProjects projects = {projects}/>} />
             <Route path = "projects/new" element = {<NewProject onSave = {addProject} />} />
