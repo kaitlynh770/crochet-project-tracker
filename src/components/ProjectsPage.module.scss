@@ -1,11 +1,8 @@
 .welcome_logout_container {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-end;
   gap: 12px;
-  position: absolute;
-  top: 16px;
-  right: 16px;
   background: rgba(247, 246, 243, 0.95); // optional, matches your bg
   padding: 8px 16px;
   border-radius: 8px;
