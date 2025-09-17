@@ -61,7 +61,7 @@ function Login({setUser}){
                     </div>
                     <div className = {styles.account_actions}>
                         <button className = {styles.authentication} type = "submit">{seeLogin ? "Login" : "Create Account"}</button>
-                        <button className = {styles.redirect} onClick = {() => setSeeLogin(!seeLogin)}>{seeLogin ? "Dont have an account?" : "Have an account? Login"}</button>
+                        <button className = {styles.redirect} type = "button" onClick = {() => setSeeLogin(!seeLogin)}>{seeLogin ? "Dont have an account?" : "Have an account? Login"}</button>
                     </div>
                 </div>
             </div>
