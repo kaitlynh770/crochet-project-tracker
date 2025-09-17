@@ -36,6 +36,13 @@ function Login({setUser}){
         }
     };
 
+    const handleToggle = () => {
+        setSeeLogin(!seeLogin);
+        setEmail("");
+        setPassword("");
+        setUserName("")
+    }
+
     return(
         <form onSubmit = {seeLogin ? handleLogin : handleNewUser}>
             <div className = {styles.overlay}>
@@ -61,7 +68,7 @@ function Login({setUser}){
                     </div>
                     <div className = {styles.account_actions}>
                         <button className = {styles.authentication} type = "submit">{seeLogin ? "Login" : "Create Account"}</button>
-                        <button className = {styles.redirect} type = "button" onClick = {() => setSeeLogin(!seeLogin)}>{seeLogin ? "Dont have an account?" : "Have an account? Login"}</button>
+                        <button className = {styles.redirect} type = "button" onClick = {handleToggle}>{seeLogin ? "Dont have an account?" : "Have an account? Login"}</button>
                     </div>
                 </div>
             </div>
