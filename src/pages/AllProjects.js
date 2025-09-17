@@ -1,9 +1,22 @@
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Project from '../components/Project';
 import styles from '../pages_styling/AllProjects.module.scss'
-function AllProjects({projects}){
+import { useEffect, useState } from "react";
+import { collection, getDocs, query } from "firebase/firestore";
+import { db } from "../firebase";
+function AllProjects({user, projects}){
     const navigate = useNavigate(); //this is what we'll use to navigate to a specific project
     //create function to look at project details
+    // const [projects, setProjects] = useState([]);
+    // useEffect(() => {
+    //     async function fetchProjects(){
+    //         const querySnapshot = await getDocs(
+    //             collection(db, "users", user.uid, "projects")
+    //         );
+    //         setProjects(querySnapshot.docs.map(doc => ({id: doc.id, ...doc.data()})))
+    //     }
+    //     if(user?.uid) fetchProjects()
+    // }, [user])
     const clickOnProject = (projectId) =>{
         navigate(`/projects/${projectId}`)
         //this will be tied to each projects onClick function

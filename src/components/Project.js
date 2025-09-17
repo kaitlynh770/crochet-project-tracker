@@ -25,7 +25,7 @@ function Project({projectImg, name, pieces, notes = ""}){
                     transition: 'max-height 0.3s ease',
                 }}>
                  {details && pieces.map((piece, index) => (
-                    <Piece key = {index} name = {piece.name} rounds = {piece.rounds} quantity={piece.quantity}/>
+                    <Piece key = {index} name = {piece.pieceName} rounds = {piece.pieceRounds} quantity={piece.pieceQuantity}/>
                 ))}
             </div>
         </div>

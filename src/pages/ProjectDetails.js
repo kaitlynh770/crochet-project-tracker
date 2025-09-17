@@ -10,19 +10,19 @@ function ProjectDetails({ projects }) {
   // [true, true, false, false, false]      this refers to piece 1 with 2 rounds completed
   // [false, false, false, false, false]    this refers to piecee 2 with 0 rounds completed
   //]
-  const { projectId } = useParams(); //get the projectId via parameters
-  const id = Number(projectId); //convert it to a number because that's how its stored in the project object
-  const project = projects.find(p => p.id === id); //find the project we're clicking on based off of the id passed to us
+const { projectId } = useParams();
+const project = projects.find(p => p.id === projectId);
+  //const project = projects.find(p => p.id === id); //find the project we're clicking on based off of the id passed to us
 
   // Expand pieces by quantity with displayName and keep originalName
   const expandedPieces = useMemo(() => { //we need to calcuate which pieces will need to be expanded or not, this is something that won't really change too so using useMemo is a great option for this. We wouldn't want this calculation (creating the newArray with expanded pieces) calculated everytime on a render so we should Memoize it so it's cached and ONLY changes if project changes (which it won't)
     if (!project || !project.pieces) return []; //safety check, if there is no project or no pieces then return
     return project.pieces.flatMap(piece => //this is a method that both maps and flattens (merges nested arrays into one array)
-      Array.from({ length: piece.quantity }, (_, i) => ({ //so for each piece in the project.pieces array, we're going to create another array that's the length of that piece's quantity
+      Array.from({ length: piece.pieceQuantity }, (_, i) => ({ //so for each piece in the project.pieces array, we're going to create another array that's the length of that piece's quantity
         ...piece,
-        displayName: piece.quantity > 1 ? `${piece.name} ${i + 1}` : piece.name, //if the quantity is more than 1 than we label it as {piece} {quantity} else if it's just one, just show the name
-        originalName: piece.name,
-        quantity: piece.quantity,
+        displayName: piece.pieceQuantity > 1 ? `${piece.pieceName} ${i + 1}` : piece.pieceName, //if the quantity is more than 1 than we label it as {piece} {quantity} else if it's just one, just show the name
+        originalName: piece.pieceName,
+        quantity: piece.pieceQuantity,
       }))
     );
   }, [project]);
@@ -32,39 +32,39 @@ function ProjectDetails({ projects }) {
   useEffect(() => {
     if (expandedPieces.length > 0) { //if there's something in the expandedPieces array
       setRoundsCompleted( //we're going to map through the array and set all the rounds to false
-        expandedPieces.map(piece => Array(piece.rounds).fill(false))
+        expandedPieces.map(piece => Array(piece.pieceRounds).fill(false))
       );
     }
   }, [expandedPieces]); //this should only happen once, when the project initially gets loaded in
 
   const handleRoundClick = (pieceIdx, roundIdx) => {
     setRoundsCompleted(prev => //this is referring to the previous state of the pieces array
-      prev.map((pieceRounds, idx) =>
+      prev.map((pieceR, idx) =>
         idx === pieceIdx //if this is the piece we're looking for
-          ? pieceRounds.map((completed, rIdx) =>
+          ? pieceR.map((completed, rIdx) =>
               rIdx === roundIdx ? !completed : completed //if this is the round we're looking to toggle, either change the state or leave it alone
             )
-          : pieceRounds //if it's not the round we're looking for leave it alone
+          : pieceR //if it's not the round we're looking for leave it alone
       )
     );
   };
 
   const redoPiece = (pieceIdx) => {
     setRoundsCompleted(prev=>
-        prev.map((pieceRounds, idx) =>
+        prev.map((pieceR, idx) =>
             idx === pieceIdx
-            ? Array(pieceRounds.length).fill(false)
-            : pieceRounds
+            ? Array(pieceR.length).fill(false)
+            : pieceR
         )
     )
   }
 
   const completePiece = (pieceIdx) => {
     setRoundsCompleted(prev =>
-        prev.map((pieceRounds, idx) =>
+        prev.map((pieceR, idx) =>
             idx === pieceIdx
-            ? Array(pieceRounds.length).fill(true)
-            : pieceRounds
+            ? Array(pieceR.length).fill(true)
+            : pieceR
         )
     )
   }
@@ -149,19 +149,19 @@ function ProjectDetails({ projects }) {
                 >
                   {/* If quantity > 1, show displayName (e.g., Ear 1), else just name */}
                   <div className = {styles.piece_interactions}>
-                    <h3>{pieces[0].quantity > 1 ? p.displayName : p.name}</h3>
+                    <h3>{pieces[0].pieceQuantity > 1 ? p.displayName : p.pieceName}</h3>
                         <img src = {redo} onClick = {() => redoPiece(p.expandedIdx)} />
                         <img src = {complete} onClick = {() => completePiece(p.expandedIdx)}/>
                   </div>
                   <div className={styles.round_text}>
-                    <p>Total Rounds: {p.rounds}</p>
+                    <p>Total Rounds: {p.pieceRounds}</p>
                     <p>
                       Progress:{' '}
                       {roundsCompleted[p.expandedIdx]?.filter(Boolean).length || 0} of{' '}
-                      {p.rounds}
+                      {p.pieceRounds}
                     </p>
                     <div className={styles.rounds_container}>
-                      {[...Array(p.rounds)].map((_, i) => (
+                      {[...Array(p.pieceRounds)].map((_, i) => (
                         <button
                           key={i}
                           className={
