@@ -1,5 +1,5 @@
 import {useState, useEffect, useRef} from 'react';
-import ReactDOM from 'react-dom/client';
+import { db } from '../firebase'
 import styles from '../pages_styling/NewProject.module.scss';
 import NewPiece  from '../components/NewPiece'
 import miffy from '../assets/miffy_keychain.jpeg'

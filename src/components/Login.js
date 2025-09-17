@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { auth } from '../firebase'
+import { auth, db } from '../firebase'
+import { doc, setDoc } from 'firebase/firestore';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import styles from './Login.module.scss'
 
@@ -17,6 +18,12 @@ function Login({setUser}){
             const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
             await updateProfile(userCredentials.user, {
                 displayName: userName
+            });
+
+            await setDoc(doc(db, "users", userCredentials.user.uid), {
+                displayName: userName,
+                email: userCredentials.user.email,
+                createdAt: new Date(),
             });
             setUser({...userCredentials.user, displayName: userName});
             alert(`${userName}, your account has been created successfully!`);
