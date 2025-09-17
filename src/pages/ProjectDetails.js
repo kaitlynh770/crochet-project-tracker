@@ -10,9 +10,8 @@ function ProjectDetails({ projects }) {
   // [true, true, false, false, false]      this refers to piece 1 with 2 rounds completed
   // [false, false, false, false, false]    this refers to piecee 2 with 0 rounds completed
   //]
-const { projectId } = useParams();
-const project = projects.find(p => p.id === projectId);
-  //const project = projects.find(p => p.id === id); //find the project we're clicking on based off of the id passed to us
+    const { projectId } = useParams();
+    const project = projects.find(p => p.id === projectId);
 
   // Expand pieces by quantity with displayName and keep originalName
   const expandedPieces = useMemo(() => { //we need to calcuate which pieces will need to be expanded or not, this is something that won't really change too so using useMemo is a great option for this. We wouldn't want this calculation (creating the newArray with expanded pieces) calculated everytime on a render so we should Memoize it so it's cached and ONLY changes if project changes (which it won't)

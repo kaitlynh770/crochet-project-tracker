@@ -7,6 +7,7 @@ import miffy from '../assets/miffy_keychain.jpeg'
 import Piece from '../components/Piece';
 import edit_icon from '../assets/edit-button.png';
 import delete_icon from '../assets/delete-button.png';
+import { useNavigate } from 'react-router-dom';
 
 function NewProject({user, onProjectAdded}){
     const [projectName, setProjectName] = useState("");
@@ -15,6 +16,7 @@ function NewProject({user, onProjectAdded}){
     const [editPieceId, setEditId] = useState(null); //store the piece that will be edited
     const [pieces, setPieces] = useState([]) //array to store pieces of a project, this information will be sent to us from the NewPiece menu
     const notesRef = useRef(null); //create a reference to the notes textarea
+    const navigate = useNavigate();
 
     const keyDownBulletPoints = (e) => { //function to have every new line start with a bullet point when user hits enter
         if(e.key === 'Enter'){
@@ -87,6 +89,7 @@ function NewProject({user, onProjectAdded}){
             setNotes('')
             setPieces([])
             if (onProjectAdded) onProjectAdded(); // <-- Trigger refetch!
+            navigate(`/projects`)
         }
         catch(err){
             alert("Error saving project" + err.message);
