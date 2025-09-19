@@ -42,6 +42,14 @@
     padding: 8px;
     text-align: left;
     }
+    .toggle-icon{
+        position: absolute;
+        right: 2px;
+        top: 50%;
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+    }
 }
 .authentication {
   width: 50%;
