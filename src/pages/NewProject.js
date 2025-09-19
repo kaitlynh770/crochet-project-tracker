@@ -15,6 +15,7 @@ function NewProject({user, onProjectAdded}){
     const [isNewPieceMenuOpen, setNewPieceMenuOpen] = useState(false);
     const [editPieceId, setEditId] = useState(null); //store the piece that will be edited
     const [pieces, setPieces] = useState([]) //array to store pieces of a project, this information will be sent to us from the NewPiece menu
+    const [projectImage, setProjectImage] = useState(null);
     const notesRef = useRef(null); //create a reference to the notes textarea
     const navigate = useNavigate();
 
@@ -72,6 +73,11 @@ function NewProject({user, onProjectAdded}){
     const deletePiece = (id) => {
         setPieces(pieces => pieces.filter(piece => piece.id !== id));
     };
+    const handleImage = (e) => {
+        if(e.target.files[0]){
+            setProjectImage(e.target.files[0])
+        }
+    };
 
     const saveProject = async() => {
         if(!projectName){
@@ -126,6 +132,10 @@ function NewProject({user, onProjectAdded}){
                             onKeyDown={keyDownBulletPoints}
                             onFocus = {handleNotesFocus}
                             />
+                        </div>
+                        <div className = {styles["field-container"]}>
+                            <label>Project Image (Optional)</label>
+                            <input type = "file" accept = "image/*" onChange = {handleImage} />
                         </div>
                         {pieces.length > 0 &&
                             <div className={styles["field-container"]}>
