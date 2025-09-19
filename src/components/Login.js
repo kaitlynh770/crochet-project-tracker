@@ -10,6 +10,7 @@ function Login({setUser}){
     // const [user, setUser] = useState(null);
     const [userName, setUserName] = useState("");
     const [seeLogin, setSeeLogin] = useState(true);
+    const [seePassword, setSeePassword] = useState(false);
     const handleNewUser =  async(e) => {
         e.preventDefault(); //helps to stop the page from reloading and losing our information when our form is submitted
         //pressing the enter key causes a browser to reload and discard all Javascript state and ongoing operations (this is the default behavior)
@@ -70,7 +71,7 @@ function Login({setUser}){
                     <div className= {styles["field-container"]}>
                         <div className= {styles["input-wrapper"]}>
                             <label>Password: </label>
-                            <input value = {password} onChange = {(e=> setPassword(e.target.value))} placeholder = "password" />
+                            <input value = {password} type = "password" onChange = {(e=> setPassword(e.target.value))} placeholder = "password" />
                         </div>
                     </div>
                     <div className = {styles.account_actions}>

@@ -27,7 +27,7 @@ function ProjectsPage ({user, onLogout}) {
                 <button onClick = {onLogout}>Logout</button>
             </div>
           <Routes>
-            <Route path = "/projects" element = {<AllProjects user = {user} projects = {projects} />} />
+            <Route path = "/projects" element = {<AllProjects projects = {projects} />} />
             <Route path="projects/new" element={<NewProject user={user} onProjectAdded={fetchProjects} />} />
             <Route path = "projects/:projectId" element = {<ProjectDetails projects = {projects}/>} />
           </Routes>
