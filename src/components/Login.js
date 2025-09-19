@@ -3,6 +3,8 @@ import { auth, db } from '../firebase'
 import { doc, setDoc } from 'firebase/firestore';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import styles from './Login.module.scss'
+import visible from '../assets/visible.png';
+import notVisible from '../assets/not-visible.png';
 
 function Login({setUser}){
     const [email, setEmail] = useState("");
@@ -59,19 +61,20 @@ function Login({setUser}){
                     {!seeLogin && <div className = {styles["field-container"]}>
                         <div className = {styles["input-wrapper"]}>
                             <label>Name: </label>
-                            <input value = {userName} onChange = {(e => setUserName(e.target.value))} placeholder = "name" />
+                            <input value = {userName} onChange = {(e => setUserName(e.target.value))} placeholder = "Enter your name" />
                         </div>
                     </div>}
                     <div className= {styles["field-container"]}>
                         <div className = {styles["input-wrapper"]}>
                             <label>Email: </label>
-                            <input value = {email} onChange={(e=> setEmail(e.target.value))} placeholder="email"/>
+                            <input value = {email} onChange={(e=> setEmail(e.target.value))} placeholder="Enter your email"/>
                         </div>
                     </div>
                     <div className= {styles["field-container"]}>
-                        <div className= {styles["input-wrapper"]}>
+                        <div className= {styles["input-wrapper"]} style = {{position: "relative"}}>
                             <label>Password: </label>
-                            <input value = {password} type = "password" onChange = {(e=> setPassword(e.target.value))} placeholder = "password" />
+                            <input value = {password} type = {seePassword ? "text" : "password"} onChange = {(e=> setPassword(e.target.value))} placeholder = {seeLogin ? "Enter your password" : "Minimum 6 letters"} />
+                            <img src = {seePassword ? visible : notVisible} className = {styles["toggle-icon"]} onClick = {() => setSeePassword(!seePassword)} tabIndex={0} />
                         </div>
                     </div>
                     <div className = {styles.account_actions}>
