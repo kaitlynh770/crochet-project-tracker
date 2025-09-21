@@ -5,7 +5,7 @@ import styles from '../pages_styling/NewProject.module.scss';
 import NewPiece  from '../components/NewPiece'
 import miffy from '../assets/miffy_keychain.jpeg'
 import pompomplaceholder from '../assets/placeholder-pompompurin-theme.png';
-import cinnaplaceholder from '../assets/placeholder-pompompurin-theme.png'
+import cinnaplaceholder from '../assets/placeholder-cinnamaroll-theme.png';
 import Piece from '../components/Piece';
 import edit_icon from '../assets/edit-button.png';
 import delete_icon from '../assets/delete-button.png';
@@ -75,34 +75,35 @@ function NewProject({user, onProjectAdded}){
     const deletePiece = (id) => {
         setPieces(pieces => pieces.filter(piece => piece.id !== id));
     };
-    const handleImage = (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
+    const handleImage = (e) => { //handle the image upload
+        const file = e.target.files[0]; //files is always an array like object so just grab the first one in the array
+        if (!file) return; //if there is nothing in the files then return
 
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setProjectImage(reader.result); // <-- Base64 string
+        const reader = new FileReader(); //built in browser API that lets us read the contents of a File object
+        reader.onloadend = () => { //function that fires when reading operation is done (can either succeed or fail)
+            setProjectImage(reader.result); // Base64 string, Firestore Database doesn't allow for uploading the file image unless we the storage as well (not included in spark plan) so I opted for converting the image to Base64 to be stored into my existing database easily
         };
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(file); //method that tells the FileReader how to actually read the file (so we're telling reader to read this as a Data URL). This is actually the step that converts the file (originally a jpeg or png, etc.) into a Base64 data url
     };
 
-    const saveProject = async() => {
-        if(!projectName){
+    const saveProject = async() => { //async function because we're working with promises (database stuff)
+        if(!projectName){ //don't let the user proceed unless they've put in a name for th eproject
             alert('Please fill out project name!');
             return
         }
-        const newProjectObject = {projectImg: projectImage || pompomplaceholder, name: projectName, pieces: pieces, notes: notes, createdAt: new Date()};
+        const newProjectObject = {projectImg: projectImage || pompomplaceholder, name: projectName, pieces: pieces, notes: notes, createdAt: new Date()}; //if there's something stored in projectImage then we set projectImg equal to the file a user uploaded (and converted to the Base64 data url of course) but if not, it'll just use the placeholder image (pompompurin)
         try{
-            await addDoc(
-                collection(db, "users", user.uid, "projects"),
+            await addDoc( //adding newProjectObject to the projects subcollection (users/{user.uid}/projects)
+                collection(db, "users", user.uid, "projects"), //find the correct collection and add the newProjectObject to it
                 newProjectObject
             );
             alert('Project saved!');
+            //reset everything for the next project
             setProjectName('')
             setNotes('')
             setPieces([])
             setProjectImage(null);
-            if (onProjectAdded) onProjectAdded(); // <-- Trigger refetch!
+            if (onProjectAdded) onProjectAdded(); // we call again to trigger a refetch, wanna make sure the UI is fully updated
             navigate(`/projects`)
         }
         catch(err){
@@ -115,7 +116,7 @@ function NewProject({user, onProjectAdded}){
             console.log('First piece:', pieces[0]);
         }
     }, [pieces]);
-    const pieceToEdit = pieces.find(piece => piece.id === editPieceId);
+    const pieceToEdit = pieces.find(piece => piece.id === editPieceId); //checker for correct piece when a user chooses to edit
     return(
             <div className ={styles.form}>
                 <form className={styles.new_project}>
