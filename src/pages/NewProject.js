@@ -4,6 +4,8 @@ import { collection, addDoc } from 'firebase/firestore'
 import styles from '../pages_styling/NewProject.module.scss';
 import NewPiece  from '../components/NewPiece'
 import miffy from '../assets/miffy_keychain.jpeg'
+import pompomplaceholder from '../assets/placeholder-pompompurin-theme.png';
+import cinnaplaceholder from '../assets/placeholder-pompompurin-theme.png'
 import Piece from '../components/Piece';
 import edit_icon from '../assets/edit-button.png';
 import delete_icon from '../assets/delete-button.png';
@@ -74,9 +76,14 @@ function NewProject({user, onProjectAdded}){
         setPieces(pieces => pieces.filter(piece => piece.id !== id));
     };
     const handleImage = (e) => {
-        if(e.target.files[0]){
-            setProjectImage(e.target.files[0])
-        }
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setProjectImage(reader.result); // <-- Base64 string
+        };
+        reader.readAsDataURL(file);
     };
 
     const saveProject = async() => {
@@ -84,7 +91,7 @@ function NewProject({user, onProjectAdded}){
             alert('Please fill out project name!');
             return
         }
-        const newProjectObject = {projectImg: miffy, name: projectName, pieces: pieces, notes: notes, createdAt: new Date()};
+        const newProjectObject = {projectImg: projectImage || pompomplaceholder, name: projectName, pieces: pieces, notes: notes, createdAt: new Date()};
         try{
             await addDoc(
                 collection(db, "users", user.uid, "projects"),
@@ -94,6 +101,7 @@ function NewProject({user, onProjectAdded}){
             setProjectName('')
             setNotes('')
             setPieces([])
+            setProjectImage(null);
             if (onProjectAdded) onProjectAdded(); // <-- Trigger refetch!
             navigate(`/projects`)
         }
