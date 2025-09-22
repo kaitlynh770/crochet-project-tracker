@@ -6,7 +6,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
 import '../global_styles/global.scss'
 import styles from './ProjectsPage.module.scss'
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 function ProjectsPage ({user, onLogout}) {
     const [projects, setProjects] = useState([]);
