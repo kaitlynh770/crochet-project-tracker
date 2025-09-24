@@ -3,13 +3,11 @@ import PieceItem from './PieceItem';
 
 function PieceGroup({ originalName, pieces, onGroupComplete, onPieceComplete }) {
   // Each piece manages its own completion state, but we track group completion here
-  const [pieceStates, setPieceStates] = useState(
-    pieces.map(_ => ({ completed: false }))
-  );
+  const [pieceStates, setPieceStates] = useState(pieces.map((_) => ({ completed: false })));
 
   // Handler for when a piece is completed
   const handlePieceComplete = (pieceIdx, completed) => {
-    setPieceStates(prev => {
+    setPieceStates((prev) => {
       const newStates = [...prev];
       newStates[pieceIdx] = { completed };
       return newStates;
@@ -18,7 +16,7 @@ function PieceGroup({ originalName, pieces, onGroupComplete, onPieceComplete }) 
   };
 
   // Check if all pieces in the group are complete
-  const groupComplete = pieceStates.every(s => s.completed);
+  const groupComplete = pieceStates.every((s) => s.completed);
 
   useEffect(() => {
     if (groupComplete && onGroupComplete) {
@@ -36,7 +34,7 @@ function PieceGroup({ originalName, pieces, onGroupComplete, onPieceComplete }) 
           key={idx}
           piece={p}
           isComplete={pieceStates[idx].completed}
-          onComplete={completed => handlePieceComplete(idx, completed)}
+          onComplete={(completed) => handlePieceComplete(idx, completed)}
           showDisplayName={pieces[0].pieceQuantity > 1}
         />
       ))}

@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
-import Project from "../components/Project";
-import styles from "../pages_styling/AllProjects.module.scss";
-import confusedBear from "../assets/bear.gif";
+import { Link } from 'react-router-dom';
+import Project from '../components/Project';
+import styles from '../pages_styling/AllProjects.module.scss';
+import confusedBear from '../assets/bear.gif';
 
 function AllProjects({ projects }) {
   return (
@@ -12,7 +12,7 @@ function AllProjects({ projects }) {
           <div className={styles.no_projects}>
             <img src={confusedBear} alt="Confused Bear" />
             <h2>
-              Hmm, seems like you don't have any projects. Why not try{" "}
+              Hmm, seems like you don't have any projects. Why not try{' '}
               <Link to="/projects/new">creating one?</Link>
             </h2>
           </div>
@@ -20,7 +20,7 @@ function AllProjects({ projects }) {
         {projects.map((project) => (
           <div
             key={`project-${project.id}-${project.name}`}
-            style={{ cursor: "pointer" }}
+            style={{ cursor: 'pointer' }}
             className={styles.project_wrapper}
           >
             <Project

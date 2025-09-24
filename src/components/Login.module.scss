@@ -1,55 +1,57 @@
-.overlay{
-    position: fixed; // or absolute if you want it relative to a parent
-    inset: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0,0,0,0.4); // semi-transparent background
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000; // make sure it's above other content
-    font-family: 'Koho', sans-serif impotant !important;
+.overlay {
+  position: fixed; // or absolute if you want it relative to a parent
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4); // semi-transparent background
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; // make sure it's above other content
+  font-family:
+    'Koho',
+    sans-serif impotant !important;
 }
-.login_or_create{
-    background: #E6F2F5;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
-    padding: 15px;
-    border-radius: 20px;
-    width: 40%;
+.login_or_create {
+  background: #e6f2f5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  padding: 15px;
+  border-radius: 20px;
+  width: 40%;
 
-    .field-container {
+  .field-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
     margin-bottom: 16px;
-    }
-    .input-wrapper {
-    width: 70%;           // or your preferred width
+  }
+  .input-wrapper {
+    width: 70%; // or your preferred width
     display: flex;
     flex-direction: column;
     align-items: flex-start; // left-aligns children
-    }
-    .input-wrapper label {
+  }
+  .input-wrapper label {
     margin-bottom: 4px;
     font-weight: 500;
-    }
-    .input-wrapper input {
-    width: 100%;           // input fills the wrapper
+  }
+  .input-wrapper input {
+    width: 100%; // input fills the wrapper
     padding: 8px;
     text-align: left;
-    }
-    .toggle-icon{
-        position: absolute;
-        right: 2px;
-        top: 50%;
-        width: 24px;
-        height: 24px;
-        cursor: pointer;
-    }
+  }
+  .toggle-icon {
+    position: absolute;
+    right: 2px;
+    top: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
 }
 .authentication {
   width: 50%;
@@ -71,27 +73,27 @@
     color: #ffff;
   }
 }
-.account_actions{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    width: 100%;
-    margin-top: 10px;
+.account_actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin-top: 10px;
 
-    .redirect{
-        cursor: pointer;
-        background-color: transparent;
-        border-width: 0;
-        font-family: inherit;
-        font-size: inherit;
-        font-style: inherit;
-        font-weight: inherit;
-        line-height: inherit;
-        padding: 0;
+  .redirect {
+    cursor: pointer;
+    background-color: transparent;
+    border-width: 0;
+    font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    padding: 0;
 
-        &:hover{
-            color: #515151;
-        }
+    &:hover {
+      color: #515151;
     }
+  }
 }

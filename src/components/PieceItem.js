@@ -15,11 +15,7 @@ function PieceItem({ piece, isComplete, onComplete, showDisplayName }) {
   }, [rounds]);
 
   const handleRoundClick = (roundIdx) => {
-    setRounds(prev =>
-      prev.map((completed, idx) =>
-        idx === roundIdx ? !completed : completed
-      )
-    );
+    setRounds((prev) => prev.map((completed, idx) => (idx === roundIdx ? !completed : completed)));
   };
 
   const redoPiece = () => {

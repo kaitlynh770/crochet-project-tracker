@@ -15,8 +15,6 @@ function App() {
     setUser(null);
   };
 
-  
-
   return (
     <div className="App">
       <div className="navigate">

@@ -8,9 +8,7 @@ function Rounds({ pieceRounds, roundsCompleted, handleRoundClick }) {
         <button
           key={i}
           className={
-            roundsCompleted && roundsCompleted[i]
-              ? styles.rounds_clicked
-              : styles.rounds_unclicked
+            roundsCompleted && roundsCompleted[i] ? styles.rounds_clicked : styles.rounds_unclicked
           }
           onClick={() => handleRoundClick(i)}
         >
