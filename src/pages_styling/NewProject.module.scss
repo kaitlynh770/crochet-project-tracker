@@ -115,13 +115,48 @@
 }
 
 
+.button {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  margin-top: 10px;
+  color: #575355;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  align-self: center;
+  transition: background 0.2s;
+
+  
+  
+  &:hover {
+    background: #A0C4D2;
+    color: #ffff;
+  }
+}
+
+.button_primary {
+  @extend .button;
+  background: #E6F2F5;
+}
+
+.button_secondary {
+  @extend .button;
+  background: transparent;
+  border: solid 2px #A0C4D2;
+}
+
 // --- Centered, full-width button ---
 .add_piece {
   width: 100%;
   box-sizing: border-box;
   padding: 12px;
   margin-top: 10px;
-  background: #E6F2F5;
+  // background: #E6F2F5;
+  background: transparent;
+  border-color: #E6F2F5;
   color: #575355;
   font-size: 1.1rem;
   font-weight: 700;

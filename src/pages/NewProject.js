@@ -167,7 +167,8 @@ function NewProject({ user, onProjectAdded }) {
                         </div>
                     </div>
                 }
-                {pieces.length > 0 ? (<button className={styles.add_piece} type="button" onClick={saveProject}>Create Project</button>) : (<button onClick={toggleMenu} className={styles.add_piece} type="button">Add Piece</button>)}
+                <button onClick={toggleMenu} className={styles.button_secondary} type="button">Add Piece</button>
+                {pieces.length > 0 ? (<button className={styles.button_primary} type="button" onClick={saveProject}>Create Project</button>) : null}
             </form>
             {isNewPieceMenuOpen && (
                 <NewPiece
