@@ -1,12 +1,11 @@
-import logo from './logo.svg';
-import { auth } from "../src/firebase"
-import {signOut} from "firebase/auth"
+import { auth } from "../src/firebase";
+import { signOut } from "firebase/auth";
 import './App.css';
 import NavBar from './components/NavBar';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ProjectsPage from './components/ProjectsPage';
 import Login from './components/Login';
-import './global_styles/global.scss'
+import './global_styles/global.scss';
 function App() {
   const [user, setUser] = useState(null)
     const handleLogout = async() => {

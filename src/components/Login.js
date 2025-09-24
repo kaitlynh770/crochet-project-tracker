@@ -74,7 +74,7 @@ function Login({setUser}){
                         <div className= {styles["input-wrapper"]} style = {{position: "relative"}}>
                             <label>Password: </label>
                             <input value = {password} type = {seePassword ? "text" : "password"} onChange = {(e=> setPassword(e.target.value))} placeholder = {seeLogin ? "Enter your password" : "Minimum 6 letters"} />
-                            <img src = {seePassword ? visible : notVisible} className = {styles["toggle-icon"]} onClick = {() => setSeePassword(!seePassword)} tabIndex={0} />
+                            <img src = {seePassword ? visible : notVisible} className = {styles["toggle-icon"]} onClick = {() => setSeePassword(!seePassword)} tabIndex={0} alt="toggle password visibility"/>
                         </div>
                     </div>
                     <div className = {styles.account_actions}>

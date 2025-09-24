@@ -1,6 +1,5 @@
-import {useEffect, useRef, useState} from 'react';
-import ReactDOM from 'react-dom/client';
-import styles from './NewPiece.module.scss'
+import { useEffect, useRef, useState } from 'react';
+import styles from './NewPiece.module.scss';
 
 function NewPiece({initialData, onClose, onSave}){
     const [pieceName, setPieceName] = useState(initialData?.pieceName || "");
@@ -9,7 +8,7 @@ function NewPiece({initialData, onClose, onSave}){
     const [pieceRounds, setPieceRounds] = useState(initialData?.pieceRounds || "");
     function savePiece(e){
         e.preventDefault();
-        if(!pieceName || pieceRounds == ""){
+        if(!pieceName || pieceRounds === ""){
             alert("Please fill out all fields!")
             console.log(`piece name: ${pieceName}, quantity: ${pieceQuantity}, rounds: ${pieceRounds}`)
             return;
