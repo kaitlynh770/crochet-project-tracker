@@ -1,14 +1,14 @@
 .App {
   text-align: center;
 }
-.navigate{
+.navigate {
   display: flex;
   height: 100vh;
   width: 100vw;
   overflow: hidden;
 }
 
-.main-content{
+.main-content {
   flex-grow: 1;
   padding: 2vw;
   overflow-y: auto;

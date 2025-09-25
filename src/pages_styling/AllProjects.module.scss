@@ -1,13 +1,13 @@
-.all_projects{
-    display:flex;
-    flex-direction: row;
-    align-items: flex-start;
-    flex-wrap: wrap;
+.all_projects {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  flex-wrap: wrap;
 }
-.project_wrapper{
-    display: contents;
+.project_wrapper {
+  display: contents;
 }
-.no_projects{
+.no_projects {
   display: flex;
   flex-direction: column;
   align-items: center;
