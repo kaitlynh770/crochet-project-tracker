@@ -21,7 +21,7 @@ function ProjectsPage({ user, onLogout }) {
     }
   }, [user]);
 
-  useEffect(() => {
+  useEffect(() => { //runs whenever fetchProjects or user changes, calls fetchProjects if there is a user
     if (user) {
       fetchProjects();
     }

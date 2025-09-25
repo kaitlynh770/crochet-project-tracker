@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PieceItem from './PieceItem';
 
-function PieceGroup({ originalName, pieces, onGroupComplete, onPieceComplete }) {
+function PieceGroup({ originalName, pieces, onGroupComplete, onPieceComplete }) { 
   // Each piece manages its own completion state, but we track group completion here
   const [pieceStates, setPieceStates] = useState(pieces.map((_) => ({ completed: false })));
 

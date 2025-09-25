@@ -4,7 +4,7 @@ import PieceGroup from '../components/PieceGroup';
 import styles from '../pages_styling/ProjectDetails.module.scss';
 import { Notes } from '../components/Notes';
 
-function ProjectDetails({ projects, onGroupComplete, onPieceComplete }) {
+function ProjectDetails({ projects, onGroupComplete, onPieceComplete }) { //destructuring. ProjectDetails will take projects from ProjectsPage and will take onGroupComplete and onPieceComplete from PieceGroup
   const { projectId } = useParams();
   const project = projects.find((p) => p.id === projectId);
 
