@@ -1,37 +1,37 @@
 @import '../global_styles/fonts';
 
-.nav{
-    display: block;
-    background-color: #f4ced9;
-    font-size: 1vw;
-    padding: 1vw;
-    font-family: $font-primary;
-    border-radius: 25px;
-    width: 10.4vw;
-    margin: 1vw 0px 0px 1vw;
-    min-height: 800px;
-    //position: fixed;
+.nav {
+  display: block;
+  background-color: #f4ced9;
+  font-size: 1vw;
+  padding: 1vw;
+  font-family: $font-primary;
+  border-radius: 25px;
+  width: 10.4vw;
+  margin: 1vw 0px 0px 1vw;
+  min-height: 800px;
+  //position: fixed;
 
-    ul{
-        list-style: none;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-    }
+  ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
 
-    .links{
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-        margin-bottom: 20px;
-        color: #fff;
-        &:hover {
-            color: #ccc; // hover link color
-        }
+  .links {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    margin-bottom: 20px;
+    color: #fff;
+    &:hover {
+      color: #ccc; // hover link color
     }
-    .icon {
-        width: 40px; // adjust the size as needed
-        height: 40px; // adjust the size as needed
-        margin-right: 10px; // add some space between the icon and the text
-      }
+  }
+  .icon {
+    width: 40px; // adjust the size as needed
+    height: 40px; // adjust the size as needed
+    margin-right: 10px; // add some space between the icon and the text
+  }
 }

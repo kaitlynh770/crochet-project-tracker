@@ -1,47 +1,46 @@
-.menu{
-    min-height: 100vh;                    // Full viewport height
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;               // Allow full width up to max-width
-    //max-width: 80vw;           // Use viewport width units for max-width
-    margin: 0 auto;
+.menu {
+  min-height: 100vh; // Full viewport height
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%; // Allow full width up to max-width
+  //max-width: 80vw;           // Use viewport width units for max-width
+  margin: 0 auto;
 }
 
 .new_piece {
-    background: #E6F2F5;
-    border-radius: 16px;                   // Rounded corners
-    box-shadow: 0 4px 16px 0 #eadde5;      // Soft shadow for depth (optional)
-    width: 40%;                          // Fixed width for consistent input centering
-    padding: 32px 24px 32px 24px;  // top right bottom left
+  background: #e6f2f5;
+  border-radius: 16px; // Rounded corners
+  box-shadow: 0 4px 16px 0 #eadde5; // Soft shadow for depth (optional)
+  width: 40%; // Fixed width for consistent input centering
+  padding: 32px 24px 32px 24px; // top right bottom left
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .field-container {
+    width: 100%; // Take full form width
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start; // Left-align label and input together
+    margin-bottom: 24px;
+  }
+  input,
+  select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 14px;
+    font-size: 1rem;
+    border: 1.5px solid #8daad5;
+    border-radius: 6px;
+    margin: 0;
+    outline: none;
+    transition: border 0.2s;
 
-    .field-container {
-        width: 100%;                         // Take full form width
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;              // Left-align label and input together
-        margin-bottom: 24px;
+    &:focus {
+      border-color: #7389ab;
     }
-    input,
-    select {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 10px 14px;
-      font-size: 1rem;
-      border: 1.5px solid #8daad5;
-      border-radius: 6px;
-      margin: 0;
-      outline: none;
-      transition: border 0.2s;
-
-      &:focus {
-        border-color: #7389ab;
-      }
-    }
-
+  }
 }
 .save_piece {
   width: 100%;
@@ -68,7 +67,7 @@
   inset: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0,0,0,0.4); // semi-transparent background
+  background: rgba(0, 0, 0, 0.4); // semi-transparent background
   display: flex;
   align-items: center;
   justify-content: center;

@@ -1,21 +1,21 @@
 // --- Center the form container vertically and horizontally ---
 .form {
-  min-height: 100vh;                    // Full viewport height
+  min-height: 100vh; // Full viewport height
   display: flex;
   flex-direction: column;
-  align-items: center;                   // Horizontal center
+  align-items: center; // Horizontal center
 }
 
 // --- Main form styling ---
 .new_project {
-  background: #FADCE5;                   // Pink background
-  border-radius: 16px;                   // Rounded corners
-  box-shadow: 0 4px 16px 0 #eadde5;      // Soft shadow for depth (optional)
-  width: 60%;                          // Fixed width for consistent input centering
-  padding: 32px 24px 28px 24px;          // Ample inner spacing
+  background: #fadce5; // Pink background
+  border-radius: 16px; // Rounded corners
+  box-shadow: 0 4px 16px 0 #eadde5; // Soft shadow for depth (optional)
+  width: 60%; // Fixed width for consistent input centering
+  padding: 32px 24px 28px 24px; // Ample inner spacing
   display: flex;
   flex-direction: column;
-  align-items: center;                   // Center children horizontally
+  align-items: center; // Center children horizontally
 
   // --- Form title ---
   h2 {
@@ -28,11 +28,11 @@
 
   // --- Each field-container handles alignment ---
   .field-container {
-    width: 100%;                         // Take full form width
+    width: 100%; // Take full form width
     display: flex;
     flex-direction: column;
-    align-items: flex-start;              // Left-align label and input together
-    margin-bottom: 24px;                 // Consistent spacing between fields
+    align-items: flex-start; // Left-align label and input together
+    margin-bottom: 24px; // Consistent spacing between fields
 
     label {
       margin-bottom: 8px;
@@ -59,13 +59,13 @@
     }
     // --- Notes textarea styling overrides below ---
     .notes {
-      height: 110px;                    // Square-like
-      resize: none;                     // Prevent resizing
+      height: 110px; // Square-like
+      resize: none; // Prevent resizing
     }
   }
 }
 
-.pieces{
+.pieces {
   display: flex;
   flex-direction: column;
   background: #ffff;
@@ -76,21 +76,21 @@
   width: 140px;
   text-align: left;
   position: relative; // if you use absolute positioning inside
-
 }
-.pieces_container{
-    display: flex; //use flex
-    flex-direction: row; //use row to display pieces side by side
-    flex-wrap: wrap; //wrap to next line if needed
-    gap: 16px; //spacing
-    justify-content: flex-start; //start from the left
+.pieces_container {
+  display: flex; //use flex
+  flex-direction: row; //use row to display pieces side by side
+  flex-wrap: wrap; //wrap to next line if needed
+  gap: 16px; //spacing
+  justify-content: flex-start; //start from the left
 }
-.buttons{ //make sure buttons are always at the bottom of the piece container
+.buttons {
+  //make sure buttons are always at the bottom of the piece container
   display: flex;
   flex-direction: row; //buttons displayed side by side
   margin-top: auto; //push to bottom of the container
 
-  img{
+  img {
     object-fit: contain; //try to keep ratio of the image even though i'm resizing
     width: 20%;
     margin: 12px 8px;
@@ -98,7 +98,7 @@
   }
 }
 
-.fab{
+.fab {
   margin-left: auto;
   position: absolute;
   cursor: pointer;
@@ -114,14 +114,11 @@
   box-shadow: 0 4px 4px 0 #818e75;
 }
 
-
-// --- Centered, full-width button ---
-.add_piece {
+.button {
   width: 100%;
   box-sizing: border-box;
   padding: 12px;
   margin-top: 10px;
-  background: #E6F2F5;
   color: #575355;
   font-size: 1.1rem;
   font-weight: 700;
@@ -132,7 +129,42 @@
   transition: background 0.2s;
 
   &:hover {
-    background: #A0C4D2;
+    background: #a0c4d2;
+    color: #ffff;
+  }
+}
+
+.button_primary {
+  @extend .button;
+  background: #e6f2f5;
+}
+
+.button_secondary {
+  @extend .button;
+  background: transparent;
+  border: solid 2px #a0c4d2;
+}
+
+// --- Centered, full-width button ---
+.add_piece {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  margin-top: 10px;
+  // background: #E6F2F5;
+  background: transparent;
+  border-color: #e6f2f5;
+  color: #575355;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  align-self: center;
+  transition: background 0.2s;
+
+  &:hover {
+    background: #a0c4d2;
     color: #ffff;
   }
 }

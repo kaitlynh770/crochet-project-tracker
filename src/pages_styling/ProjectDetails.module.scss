@@ -1,87 +1,86 @@
 .project_details {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-    h1{
-        text-align: left;
-        font-weight: bold;
-        font-size: 3vw;
-    }
-
-    h2{
-        text-align: left;
-        font-weight: bold;
-        font-size: 2vw;
-    }
-    h3{
-        text-align: left;
-        font-weight: bolds;
-        font-size: 1.8vw;
-    }
-    ul{
-        font-size: 1vw;
-    }
-    li{
-        text-align: left;
-    }
-
-}
-.piece_interactions {
-    display: flex;
-    align-items: center; // align items with the name of the piece
-    h3 {
-        margin: 0; // Remove default margin for better alignment
-    }
-    img {
-        height: 20px;
-        width: 20px;
-        margin-left: 0.5rem; // Add spacing between text and icons
-        vertical-align: middle; // just really making sure it's centered
-        cursor: pointer; // clickable
-    }
-}
-.round_text{
+  h1 {
     text-align: left;
     font-weight: bold;
+    font-size: 3vw;
+  }
+
+  h2 {
+    text-align: left;
+    font-weight: bold;
+    font-size: 2vw;
+  }
+  h3 {
+    text-align: left;
+    font-weight: bolds;
+    font-size: 1.8vw;
+  }
+  ul {
     font-size: 1vw;
-    margin-left: 2vw;
+  }
+  li {
+    text-align: left;
+  }
 }
-.rounds_container{
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    flex-wrap: wrap;
+.piece_interactions {
+  display: flex;
+  align-items: center; // align items with the name of the piece
+  h3 {
+    margin: 0; // Remove default margin for better alignment
+  }
+  img {
+    height: 20px;
+    width: 20px;
+    margin-left: 0.5rem; // Add spacing between text and icons
+    vertical-align: middle; // just really making sure it's centered
+    cursor: pointer; // clickable
+  }
 }
-.rounds_unclicked{
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    aspect-ratio: 1;
-    margin: 20px;
-    cursor: pointer;
+.round_text {
+  text-align: left;
+  font-weight: bold;
+  font-size: 1vw;
+  margin-left: 2vw;
+}
+.rounds_container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.rounds_unclicked {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  aspect-ratio: 1;
+  margin: 20px;
+  cursor: pointer;
+  background-color: transparent;
+  font-size: 1vw;
+
+  &:hover {
+    background-color: #dfebf4;
+    border: none;
+    color: white;
+  }
+}
+.rounds_clicked {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  aspect-ratio: 1;
+  margin: 20px;
+  cursor: pointer;
+  background-color: #dfebf4;
+  font-size: 1vw;
+  border: none;
+
+  &:hover {
     background-color: transparent;
-    font-size: 1vw;
-
-    &:hover{
-        background-color: #DFEBF4;
-        border: none;
-        color: white;
-    }
-}
-.rounds_clicked{
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    aspect-ratio: 1;
-    margin: 20px;
-    cursor: pointer;
-    background-color: #DFEBF4;
-    font-size: 1vw;
-    border:none;
-
-    &:hover{
-        background-color: transparent;
-        color: black;
-        border: black;
-    }
+    color: black;
+    border: black;
+  }
 }
