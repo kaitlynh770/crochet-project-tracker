@@ -77,6 +77,24 @@
   text-align: left;
   position: relative; // if you use absolute positioning inside
 }
+.pieces.new_piece {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  min-height: 100px;
+  background: white;
+  border: 2px dashed #f5c6df;
+  color: #f5c6df;
+  font-size: 2.5rem;
+  font-weight: bold;
+  transition: background 0.2s;
+  &:hover {
+    background: #f5c6df;
+    color: white;
+  }
+}
 .pieces_container {
   display: flex; //use flex
   flex-direction: row; //use row to display pieces side by side
@@ -96,22 +114,6 @@
     margin: 12px 8px;
     cursor: pointer;
   }
-}
-
-.fab {
-  margin-left: auto;
-  position: absolute;
-  cursor: pointer;
-  right: -12px;
-  bottom: -8px;
-  border: none;
-  text-align: center;
-  border-radius: 50%;
-  width: 25%;
-  aspect-ratio: 1;
-  background-color: #a7b797;
-  font-weight: bold;
-  box-shadow: 0 4px 4px 0 #818e75;
 }
 
 .button {
