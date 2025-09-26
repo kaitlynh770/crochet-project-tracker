@@ -171,11 +171,6 @@ function NewProject({ user, onProjectAdded }) {
                     <img src={edit_icon} onClick={() => editPiece(piece.id)} alt="Edit" />
                     <img src={delete_icon} onClick={() => deletePiece(piece.id)} alt="Delete" />
                   </div>
-                  {/* {index === pieces.length - 1 && (
-                    <button className={styles.fab} onClick={toggleMenu} type="button">
-                      +
-                    </button>
-                  )} */}
                 </div>
               ))}
             <div className={`${styles.pieces} ${styles.new_piece}`} onClick = {toggleMenu}>
