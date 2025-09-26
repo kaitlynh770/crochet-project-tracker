@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import complete from '../assets/check-mark.png';
 import redo from '../assets/redo.png';
 import styles from '../pages_styling/ProjectDetails.module.scss';
@@ -6,13 +6,14 @@ import RoundsButtons from './Rounds';
 
 function PieceItem({ piece, isComplete, onComplete, showDisplayName }) {
   // Manage round completion state locally
-  const [rounds, setRounds] = useState(Array(piece.pieceRounds).fill(false));
+  // Pieceitem does NOT own completion logic. It just notifies the parent (in this case, PieceGroup) when its state changes.
+  const [rounds, setRounds] = useState(Array(piece.pieceRounds).fill(false)); //set all rounds of a piece to false
 
   // Mark piece as complete if all rounds are true
   useEffect(() => {
     if (onComplete) onComplete(rounds.every(Boolean));
     // eslint-disable-next-line
-  }, [rounds]);
+  }, [rounds]);               
 
   const handleRoundClick = (roundIdx) => {
     setRounds((prev) => prev.map((completed, idx) => (idx === roundIdx ? !completed : completed)));
