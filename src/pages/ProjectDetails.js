@@ -4,7 +4,7 @@ import PieceGroup from '../components/PieceGroup';
 import styles from '../pages_styling/ProjectDetails.module.scss';
 import { Notes } from '../components/Notes';
 
-function ProjectDetails({ projects, onGroupComplete, onPieceComplete }) { //destructuring. ProjectDetails will take projects from ProjectsPage and will take onGroupComplete and onPieceComplete from PieceGroup
+function ProjectDetails({ projects, onGroupComplete, onPieceComplete }) { // Destructuring props: ProjectDetails receives 'projects' from ProjectsPage, and the completion callbacks 'onGroupComplete' and 'onPieceComplete' are passed down to PieceGroup.
   const { projectId } = useParams();
   const project = projects.find((p) => p.id === projectId);
 
@@ -34,7 +34,12 @@ function ProjectDetails({ projects, onGroupComplete, onPieceComplete }) { //dest
   }, [expandedPieces]);
 
   if (!project) return <div>Project not found!</div>;
-
+    /*
+    Here's what's going on when we're mapping each piece as a PieceGroup:
+    - We pass the group name, array of expanded pieces, and completion callbacks to PieceGroup.
+    - PieceGroup manages piece completion state and calls the provided callbacks when pieces or the group are completed.
+    - The completion callback functions (onGroupComplete, onPieceComplete) are defined in a parent component (so, Project Details) and passed down through ProjectDetails to PieceGroup, so PieceGroup can notify the parent when completion events occur.
+    */
   return (
     <div className={styles.project_details}>
       <h1>{project.name} Pattern</h1>
