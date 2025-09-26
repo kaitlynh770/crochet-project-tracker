@@ -154,7 +154,7 @@ function NewProject({ user, onProjectAdded }) {
         </div>
         <div className={styles['field-container']}>
           <label>Project Image (Optional)</label>
-          <input type="file" accept="image/*" onChange={handleImage} />
+          <input style = {{border: "none"}} type="file" accept="image/*" onChange={handleImage} />
         </div>
         {pieces.length > 0 && (
           <div className={styles['field-container']}>
