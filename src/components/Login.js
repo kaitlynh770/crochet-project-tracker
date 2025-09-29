@@ -13,7 +13,6 @@ import notVisible from '../assets/not-visible.png';
 function Login({ setUser }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const [user, setUser] = useState(null);
   const [userName, setUserName] = useState('');
   const [seeLogin, setSeeLogin] = useState(true);
   const [seePassword, setSeePassword] = useState(false);

@@ -2,13 +2,25 @@ import { auth } from '../src/firebase';
 import { signOut } from 'firebase/auth';
 import './App.css';
 import NavBar from './components/NavBar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import ProjectsPage from './components/ProjectsPage';
 import Login from './components/Login';
 import './global_styles/global.scss';
 
 function App() {
   const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    //listen for auth changes (this will let the user persist even on reload)
+    //on the initial load (and on every reload), Firebase is gonna check if the user session exists
+    //if not, the user is going to be null and get signed out
+    const authInstance = getAuth();
+    const unsubscribe = onAuthStateChanged(authInstance, (user) => {
+      setUser(user); // user is null if not logged in
+    });
+    return () => unsubscribe();
+  }, []);
 
   const handleLogout = async () => {
     await signOut(auth);

@@ -13,7 +13,7 @@ function PieceItem({ piece, isComplete, onComplete, showDisplayName }) {
   useEffect(() => {
     if (onComplete) onComplete(rounds.every(Boolean));
     // eslint-disable-next-line
-  }, [rounds]);               
+  }, [rounds]);
 
   const handleRoundClick = (roundIdx) => {
     setRounds((prev) => prev.map((completed, idx) => (idx === roundIdx ? !completed : completed)));
