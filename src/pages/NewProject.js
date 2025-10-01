@@ -106,11 +106,18 @@ function NewProject({ user, onProjectAdded }) {
       createdAt: new Date(),
     }; //if there's something stored in projectImage then we set projectImg equal to the file a user uploaded (and converted to the Base64 data url of course) but if not, it'll just use the placeholder image (pompompurin)
     try {
-      await addDoc(
+      const projectRef = await addDoc(
         //adding newProjectObject to the projects subcollection (users/{user.uid}/projects)
         collection(db, 'users', user.uid, 'projects'), //find the correct collection and add the newProjectObject to it
         newProjectObject,
       );
+
+      for(const piece of pieces){
+        await addDoc(
+          collection(db, 'users', user.uid, 'projects', projectRef.id, 'pieces'),
+          piece
+        );
+      }
       alert('Project saved!');
       //reset everything for the next project
       setProjectName('');
