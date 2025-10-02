@@ -32,7 +32,7 @@ function PieceItem({ piece, isComplete, onComplete, showDisplayName, userId, pro
   const updateProgress = async (newRounds) => {
     console.log('Updating piece with ID:', piece);
     setRounds(newRounds);
-    const pieceRef = doc(db, 'users', userId, 'projects', projectId, 'pieces', String(piece.id));
+    const pieceRef = doc(db, 'users', userId, 'projects', projectId, 'pieces', String(piece.instanceId));
     await setDoc(pieceRef, { roundProgress: newRounds }, { merge: true });
   };
 

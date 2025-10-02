@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { db } from '../firebase';
-import { collection, addDoc } from 'firebase/firestore';
+import { doc, collection, addDoc, setDoc } from 'firebase/firestore';
 import styles from '../pages_styling/NewProject.module.scss';
 import NewPiece from '../components/NewPiece';
 import pompomplaceholder from '../assets/placeholder-pompompurin-theme.png';
@@ -114,15 +114,31 @@ function NewProject({ user, onProjectAdded }) {
 
       for (const piece of pieces) {
         for (let i = 0; i < piece.pieceQuantity; i++) {
-          await addDoc(
-            collection(db, 'users', user.uid, 'projects', projectRef.id, 'pieces'),
-            {
-              ...piece,
-              instanceIndex: i,
-              id: `${piece.id}_${i}`, // Unique ID for each instance
-              roundProgress: Array(piece.pieceRounds).fill(false)
-            }
+          const instanceId= `${piece.id}_${i}`;
+          const pieceDocRef = doc(
+            db,
+            'users',
+            user.uid,
+            'projects',
+            projectRef.id,
+            'pieces',
+            instanceId
           );
+
+          await setDoc(pieceDocRef, {
+            ...piece,
+            id: instanceId,
+            roundProgress: Array(piece.pieceRounds).fill(false)
+          });
+          // await addDoc(
+          //   collection(db, 'users', user.uid, 'projects', projectRef.id, 'pieces'),
+          //   {
+          //     ...piece,
+          //     id: instanceId,
+          //     // id: `${piece.id}_${i}`, // Unique ID for each instance
+          //     roundProgress: Array(piece.pieceRounds).fill(false)
+          //   }
+          // );
         }
       }
       alert('Project saved!');
@@ -133,7 +149,8 @@ function NewProject({ user, onProjectAdded }) {
       setProjectImage(null);
       if (onProjectAdded) onProjectAdded(); // we call again to trigger a refetch, wanna make sure the UI is fully updated
       navigate(`/projects`);
-    } catch (err) {
+    }
+    catch (err) {
       alert('Error saving project' + err.message);
     }
   };

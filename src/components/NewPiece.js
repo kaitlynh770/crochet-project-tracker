@@ -14,6 +14,7 @@ function NewPiece({ initialData, onClose, onSave }) {
       return;
     }
     const np = {
+      id: crypto.randomUUID(),
       pieceName,
       pieceQuantity,
       pieceRounds,
