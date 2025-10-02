@@ -14,12 +14,20 @@ function ProjectsPage({ user, onLogout }) {
   // wrap in useCallback so that the call gets updated when user updates.
   // NOTE: this is not required when using react-compiler.
   // @see https://react.dev/learn/react-compiler
+  // const fetchProjects = useCallback(async () => {
+  //   if (user?.uid) {
+  //     const querySnapshot = await getDocs(collection(db, 'users', user.uid, 'projects'));
+  //     setProjects(querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+  //   }
+  // }, [user]);
   const fetchProjects = useCallback(async () => {
-    if (user?.uid) {
-      const querySnapshot = await getDocs(collection(db, 'users', user.uid, 'projects'));
-      setProjects(querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-    }
-  }, [user]);
+  if (user?.uid) {
+    const querySnapshot = await getDocs(collection(db, 'users', user.uid, 'projects'));
+    const projectsArray = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    console.log('Fetched projects:', projectsArray); // <-- Debug here
+    setProjects(projectsArray);
+  }
+}, [user]);
 
   useEffect(() => { //runs whenever fetchProjects or user changes, calls fetchProjects if there is a user
     if (user) {
@@ -39,7 +47,7 @@ function ProjectsPage({ user, onLogout }) {
           path="projects/new"
           element={<NewProject user={user} onProjectAdded={fetchProjects} />}
         />
-        <Route path="projects/:projectId" element={<ProjectDetails projects={projects} />} />
+        <Route path="projects/:projectId" element={<ProjectDetails projects={projects} userId = {user.uid} />} />
       </Routes>
     </div>
   );

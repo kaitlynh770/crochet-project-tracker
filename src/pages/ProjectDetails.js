@@ -4,7 +4,7 @@ import PieceGroup from '../components/PieceGroup';
 import styles from '../pages_styling/ProjectDetails.module.scss';
 import { Notes } from '../components/Notes';
 
-function ProjectDetails({ projects, onGroupComplete, onPieceComplete }) { // Destructuring props: ProjectDetails receives 'projects' from ProjectsPage, and the completion callbacks 'onGroupComplete' and 'onPieceComplete' are passed down to PieceGroup.
+function ProjectDetails({ projects, onGroupComplete, onPieceComplete, userId }) { // Destructuring props: ProjectDetails receives 'projects' from ProjectsPage, and the completion callbacks 'onGroupComplete' and 'onPieceComplete' are passed down to PieceGroup.
   const { projectId } = useParams();
   const project = projects.find((p) => p.id === projectId);
 
@@ -49,6 +49,8 @@ function ProjectDetails({ projects, onGroupComplete, onPieceComplete }) { // Des
           <PieceGroup
             key={originalName}
             originalName={originalName}
+            userId = {userId}
+            projectId={projectId}
             pieces={pieces}
             onGroupComplete={onGroupComplete}
             onPieceComplete={onPieceComplete}

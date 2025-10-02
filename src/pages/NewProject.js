@@ -112,11 +112,18 @@ function NewProject({ user, onProjectAdded }) {
         newProjectObject,
       );
 
-      for(const piece of pieces){
-        await addDoc(
-          collection(db, 'users', user.uid, 'projects', projectRef.id, 'pieces'),
-          piece
-        );
+      for (const piece of pieces) {
+        for (let i = 0; i < piece.pieceQuantity; i++) {
+          await addDoc(
+            collection(db, 'users', user.uid, 'projects', projectRef.id, 'pieces'),
+            {
+              ...piece,
+              instanceIndex: i,
+              id: `${piece.id}_${i}`, // Unique ID for each instance
+              roundProgress: Array(piece.pieceRounds).fill(false)
+            }
+          );
+        }
       }
       alert('Project saved!');
       //reset everything for the next project

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import PieceItem from './PieceItem';
 
-function PieceGroup({ originalName, pieces, onGroupComplete, onPieceComplete }) {
+function PieceGroup({ originalName, pieces, onGroupComplete, onPieceComplete, userId, projectId }) {
   // Each piece manages its own completion state, but we track group completion here
 
   const [pieceStates, setPieceStates] = useState(pieces.map((_) => ({ completed: false }))); //set all pieces to not complete
@@ -39,6 +39,8 @@ function PieceGroup({ originalName, pieces, onGroupComplete, onPieceComplete }) 
           isComplete={pieceStates[idx].completed}
           onComplete={(completed) => handlePieceComplete(idx, completed)}
           showDisplayName={pieces[0].pieceQuantity > 1}
+          userId={userId}
+          projectId={projectId}
         />
       ))}
     </div>
