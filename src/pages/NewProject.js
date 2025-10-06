@@ -105,16 +105,24 @@ function NewProject({ user, onProjectAdded }) {
       notes: notes,
       createdAt: new Date(),
     }; //if there's something stored in projectImage then we set projectImg equal to the file a user uploaded (and converted to the Base64 data url of course) but if not, it'll just use the placeholder image (pompompurin)
+    console.log(pieces)
+    console.log('Project Name:', projectName);
+    console.log('Notes:', notes);
+    console.log('Pieces:', pieces);
+    console.log('Project Image:', projectImage);
+    console.log('New Project Object:', newProjectObject);
     try {
       const projectRef = await addDoc(
         //adding newProjectObject to the projects subcollection (users/{user.uid}/projects)
         collection(db, 'users', user.uid, 'projects'), //find the correct collection and add the newProjectObject to it
         newProjectObject,
       );
+      console.log('added project')
 
       for (const piece of pieces) {
-        for (let i = 0; i < piece.pieceQuantity; i++) {
-          const instanceId= `${piece.id}_${i}`;
+          console.log('Piece:', piece);
+          console.log('piece.pieceQuantity:', piece.pieceQuantity);
+          console.log('piece.pieceRounds:', piece.pieceRounds);
           const pieceDocRef = doc(
             db,
             'users',
@@ -122,24 +130,34 @@ function NewProject({ user, onProjectAdded }) {
             'projects',
             projectRef.id,
             'pieces',
-            instanceId
+            String(piece.id) //save piece with id
           );
 
           await setDoc(pieceDocRef, {
             ...piece,
-            id: instanceId,
-            roundProgress: Array(piece.pieceRounds).fill(false)
+            id: piece.id
           });
-          // await addDoc(
-          //   collection(db, 'users', user.uid, 'projects', projectRef.id, 'pieces'),
-          //   {
-          //     ...piece,
-          //     id: instanceId,
-          //     // id: `${piece.id}_${i}`, // Unique ID for each instance
-          //     roundProgress: Array(piece.pieceRounds).fill(false)
-          //   }
-          // );
-        }
+          console.log('added pieces');
+
+          for(let i = 0; i < piece.pieceQuantity; i++){
+            const instanceRef = doc(
+              db,
+              'users',
+              user.uid,
+              'projects',
+              projectRef.id,
+              'pieces',
+              String(piece.id),
+              'instances',
+              String(i)
+            );
+
+            await setDoc(instanceRef, {
+              instanceIndex:i,
+              roundProgress: Array(piece.pieceRounds).fill(false)
+            });
+            console.log('added instances')
+          }
       }
       alert('Project saved!');
       //reset everything for the next project

@@ -14,6 +14,8 @@ function ProjectDetails({ projects, onGroupComplete, onPieceComplete, userId }) 
     return project.pieces.flatMap((piece) =>
       Array.from({ length: piece.pieceQuantity }, (_, i) => ({
         ...piece,
+        instanceId: String(i),
+        instanceIndex: i,
         displayName: piece.pieceQuantity > 1 ? `${piece.pieceName} ${i + 1}` : piece.pieceName,
         originalName: piece.pieceName,
         quantity: piece.pieceQuantity,
