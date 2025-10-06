@@ -12,7 +12,7 @@ function PieceItem({ piece, isComplete, onComplete, showDisplayName, userId, pro
 
   useEffect(() => {
     async function fetchRoundProgress() {
-      const pieceRef = doc(db, 'users', userId, 'projects', projectId, 'pieces', String(piece.id));
+      const pieceRef = doc(db, 'users', userId, 'projects', projectId, 'pieces', String(piece.id), 'instances', String(piece.instanceId || '0'));
       const pieceSnapshot = await getDoc(pieceRef);
       if (pieceSnapshot.exists()) {
         const data = pieceSnapshot.data();
@@ -22,7 +22,7 @@ function PieceItem({ piece, isComplete, onComplete, showDisplayName, userId, pro
       }
     }
     fetchRoundProgress();
-  }, [piece.id, userId, projectId, piece.pieceRounds]);
+  }, [piece.id, piece.instanceId, userId, projectId, piece.pieceRounds]);
 
   useEffect(() => {
     if (onComplete) onComplete(rounds.every(Boolean));
@@ -32,7 +32,7 @@ function PieceItem({ piece, isComplete, onComplete, showDisplayName, userId, pro
   const updateProgress = async (newRounds) => {
     console.log('Updating piece with ID:', piece);
     setRounds(newRounds);
-    const pieceRef = doc(db, 'users', userId, 'projects', projectId, 'pieces', String(piece.instanceId));
+    const pieceRef = doc(db, 'users', userId, 'projects', projectId, 'pieces', String(piece.id), 'instances', String(piece.instanceId));
     await setDoc(pieceRef, { roundProgress: newRounds }, { merge: true });
   };
 
@@ -62,7 +62,7 @@ function PieceItem({ piece, isComplete, onComplete, showDisplayName, userId, pro
       <div className={styles.piece_interactions}>
         <h3>
           {showDisplayName ? piece.displayName : piece.pieceName}
-          {piece.instanceIndex !== undefined ? ` #${piece.instanceIndex + 1}` : ''}
+          {/* {piece.instanceIndex !== undefined ? ` #${piece.instanceIndex + 1}` : ''} */}
         </h3>
         <img src={redo} onClick={redoPiece} alt="Redo" />
         <img src={complete} onClick={completePiece} alt="Complete" />
