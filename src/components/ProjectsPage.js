@@ -14,12 +14,6 @@ function ProjectsPage({ user, onLogout }) {
   // wrap in useCallback so that the call gets updated when user updates.
   // NOTE: this is not required when using react-compiler.
   // @see https://react.dev/learn/react-compiler
-  // const fetchProjects = useCallback(async () => {
-  //   if (user?.uid) {
-  //     const querySnapshot = await getDocs(collection(db, 'users', user.uid, 'projects'));
-  //     setProjects(querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-  //   }
-  // }, [user]);
   const fetchProjects = useCallback(async () => {
   if (user?.uid) {
     const querySnapshot = await getDocs(collection(db, 'users', user.uid, 'projects'));

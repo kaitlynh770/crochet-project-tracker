@@ -91,38 +91,31 @@ function NewProject({ user, onProjectAdded }) {
     reader.readAsDataURL(file); //method that tells the FileReader how to actually read the file (so we're telling reader to read this as a Data URL). This is actually the step that converts the file (originally a jpeg or png, etc.) into a Base64 data url
   };
 
-  const saveProject = async () => {
+  const saveProject = async () => { //this function has changed quite a bit due to new subcollections being created
+    //in order to store the roundProgress, we have to create a new id called the instanceId for each piece
+    //this makes it so that each piece is going to be unique (which wasn't the case previously, for pieces with a quanitty larger than 1 all of those pieces would be stored under the same piece id)
+    //having an instance id lets EVERY piece have their own roundProgress, which will be pulled and written to the database in order to keep track of progress of the users project
     //async function because we're working with promises (database stuff)
     if (!projectName) {
       //don't let the user proceed unless they've put in a name for th eproject
       alert('Please fill out project name!');
       return;
     }
-    const newProjectObject = {
+    const newProjectObject = { //first, we create the project
       projectImg: projectImage || pompomplaceholder,
       name: projectName,
       pieces: pieces,
       notes: notes,
       createdAt: new Date(),
     }; //if there's something stored in projectImage then we set projectImg equal to the file a user uploaded (and converted to the Base64 data url of course) but if not, it'll just use the placeholder image (pompompurin)
-    console.log(pieces)
-    console.log('Project Name:', projectName);
-    console.log('Notes:', notes);
-    console.log('Pieces:', pieces);
-    console.log('Project Image:', projectImage);
-    console.log('New Project Object:', newProjectObject);
-    try {
+    try { //add the project first
       const projectRef = await addDoc(
         //adding newProjectObject to the projects subcollection (users/{user.uid}/projects)
         collection(db, 'users', user.uid, 'projects'), //find the correct collection and add the newProjectObject to it
         newProjectObject,
       );
-      console.log('added project')
 
-      for (const piece of pieces) {
-          console.log('Piece:', piece);
-          console.log('piece.pieceQuantity:', piece.pieceQuantity);
-          console.log('piece.pieceRounds:', piece.pieceRounds);
+      for (const piece of pieces) { //pieces is also a subcollection that has been added, we go through the pieces array and add each piece into its collection as well
           const pieceDocRef = doc(
             db,
             'users',
@@ -130,16 +123,15 @@ function NewProject({ user, onProjectAdded }) {
             'projects',
             projectRef.id,
             'pieces',
-            String(piece.id) //save piece with id
+            String(piece.id) //save piece with id, make sure to convert to string
           );
 
-          await setDoc(pieceDocRef, {
+          await setDoc(pieceDocRef, { //add it to the collection
             ...piece,
             id: piece.id
           });
-          console.log('added pieces');
 
-          for(let i = 0; i < piece.pieceQuantity; i++){
+          for(let i = 0; i < piece.pieceQuantity; i++){ //now we go through each pieces' quantity field to create an instance id
             const instanceRef = doc(
               db,
               'users',
@@ -154,9 +146,8 @@ function NewProject({ user, onProjectAdded }) {
 
             await setDoc(instanceRef, {
               instanceIndex:i,
-              roundProgress: Array(piece.pieceRounds).fill(false)
+              roundProgress: Array(piece.pieceRounds).fill(false) //add the roundProgress field as its tied to the instance Id, NOT the piece ID
             });
-            console.log('added instances')
           }
       }
       alert('Project saved!');

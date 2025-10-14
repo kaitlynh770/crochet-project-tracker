@@ -11,7 +11,7 @@ function PieceItem({ piece, isComplete, onComplete, showDisplayName, userId, pro
   const [rounds, setRounds] = useState(Array(piece.pieceRounds).fill(false));
 
   useEffect(() => {
-    async function fetchRoundProgress() {
+    async function fetchRoundProgress() { //pull the roundProgress from the data base via the instances collection (used to be piece but has now been changed to instances)
       const pieceRef = doc(db, 'users', userId, 'projects', projectId, 'pieces', String(piece.id), 'instances', String(piece.instanceId || '0'));
       const pieceSnapshot = await getDoc(pieceRef);
       if (pieceSnapshot.exists()) {
@@ -29,7 +29,7 @@ function PieceItem({ piece, isComplete, onComplete, showDisplayName, userId, pro
     // eslint-disable-next-line
   }, [rounds]);
 
-  const updateProgress = async (newRounds) => {
+  const updateProgress = async (newRounds) => { //update via instanceId
     console.log('Updating piece with ID:', piece);
     setRounds(newRounds);
     const pieceRef = doc(db, 'users', userId, 'projects', projectId, 'pieces', String(piece.id), 'instances', String(piece.instanceId));
