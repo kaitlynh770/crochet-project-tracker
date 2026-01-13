@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Piece from './Piece';
 import styles from './Project.module.scss';
 import { useNavigate } from 'react-router-dom';
@@ -8,32 +8,17 @@ import { useNavigate } from 'react-router-dom';
 function Project({ projectImg, name, pieces, id, notes = '', onRightClick }) {
   const navigate = useNavigate();
   const [details, showDetails] = useState(false); //showing details of a project should initially be set to false
-  const [menuPosition, setMenuPosition] = useState(null);
-
 
 
   const handleButtonClick = (e) => {
     e.stopPropagation(); //prevent event bubbling, specifically prevent the navigation from happening when clicking the toggle button
-    setMenuPosition(null);
     showDetails(!details);
   };
 
   const onClickProject = () => {
     navigate(`/projects/${id}`);
-    setMenuPosition(null);
   };
 
-  // const handleRightClick = (e) => {
-  //   e.preventDefault(); //prevent default menu from opening
-  //   e.stopPropagation(); //prevent event bubbling, prevent navigation in particular from happening
-
-  //   setMenuPosition({
-  //     x: e.clientX,
-  //     y: e.clientY
-  //   });
-
-    //console.log(`project id: ${id}`)
-  // };
 
   return (
     <div className={styles.project} onClick={onClickProject} onContextMenu={onRightClick}>

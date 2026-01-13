@@ -10,7 +10,6 @@ import confusedBear from '../assets/bear.gif';
 function AllProjects({ projects, onProjectsUpdated, userId }) {
   const [contextMenu, setContextMenu] = useState(null);
   const fileInputRef = useRef(null);
-  const [chosenProjectId, setChosenProjectId] = useState(null);
 
   const storage = getStorage();
 
