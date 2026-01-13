@@ -1,15 +1,23 @@
 import { Link } from 'react-router-dom';
-import { useState, useEffect} from 'react';
+import { useState, useEffect, useRef} from 'react';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 import Project from '../components/Project';
 import styles from '../pages_styling/AllProjects.module.scss';
 import confusedBear from '../assets/bear.gif';
 
-function AllProjects({ projects }) {
+function AllProjects({ projects, onProjectsUpdated, userId }) {
   const [contextMenu, setContextMenu] = useState(null);
+  const fileInputRef = useRef(null);
+  const [chosenProjectId, setChosenProjectId] = useState(null);
+
+  const storage = getStorage();
 
   useEffect(() => {
     if (!contextMenu) return;
 
+    //close menu if user clicks outside of it
     const handleClickOutside = () => {
       setContextMenu(null);
     };
@@ -25,11 +33,40 @@ function AllProjects({ projects }) {
     e.preventDefault(); //prevent default menu from opening
     e.stopPropagation(); //prevent event bubbling, prevent navigation in particular from happening
 
+    // Set context menu position and project ID
     setContextMenu({
       projectId,
       x: e.clientX,
       y: e.clientY
     });
+  };
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    const projectId = e.target.dataset.projectId; // Get from data attribute rather than setter/getter. Dataset is synchronus so this info is available immediately and we don't have to wait for state to update.
+    
+    if (!file || !projectId) return; //sanity check
+
+    try {
+      //upload the image to Firebase Storage
+      const imageRef = ref(storage, `users/${userId}/projects/${projectId}/cover.jpg`);
+      console.log(imageRef);
+      await uploadBytes(imageRef, file);
+      //get download url from the uploaded image (this is the only way I can upload the image to Firestore righ tnow)
+      const downloadURL = await getDownloadURL(imageRef);
+
+      await updateDoc(
+        doc(db, 'users', userId, 'projects', projectId),
+        { projectImg: downloadURL }
+      );
+
+      console.log('Image uploaded and URL updated in Firestore');
+      onProjectsUpdated();
+    } catch (err) {
+      console.error(err);
+    } finally {
+      e.target.value = '';
+      delete e.target.dataset.projectId; // Clean up
+    }
   };
 
   return (
@@ -62,6 +99,13 @@ function AllProjects({ projects }) {
           </div>
         ))}
       </div>
+      <input
+        type="file"
+        accept="image/*"
+        ref={fileInputRef}
+        onChange={handleImageChange}
+        style={{ display: 'none' }}
+      />
       {contextMenu && (
         <ul
           className={styles.context_menu}
@@ -73,6 +117,8 @@ function AllProjects({ projects }) {
         >
           <li
             onClick={() => {
+              fileInputRef.current.dataset.projectId = contextMenu.projectId; // Store on element
+              fileInputRef.current.click();
               console.log('Replace image for project:', contextMenu.projectId);
               setContextMenu(null);
             }}
