@@ -16,3 +16,24 @@
   margin: 0 auto;
   min-height: 40vh; // Adjust as needed for vertical centering
 }
+.context_menu{
+  position: fixed;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 6px 0;
+  list-style: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  min-width: 160px;
+
+  li {
+    padding: 8px 16px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #f2f2f2;
+    }
+  }
+}
+
