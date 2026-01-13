@@ -65,8 +65,10 @@ function AllProjects({ projects, onProjectsUpdated, userId }) {
     } catch (err) {
       console.error(err);
     } finally {
+      //reset the file input
       e.target.value = '';
-      delete e.target.dataset.projectId; // Clean up
+      //clean up
+      delete e.target.dataset.projectId;
     }
   };
 
