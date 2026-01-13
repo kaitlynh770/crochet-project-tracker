@@ -54,6 +54,7 @@ function AllProjects({ projects, onProjectsUpdated, userId }) {
       //get download url from the uploaded image (this is the only way I can upload the image to Firestore righ tnow)
       const downloadURL = await getDownloadURL(imageRef);
 
+      //update the project's projectImg field in Firestore
       await updateDoc(
         doc(db, 'users', userId, 'projects', projectId),
         { projectImg: downloadURL }
