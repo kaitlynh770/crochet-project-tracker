@@ -1,8 +1,13 @@
 import { useParams } from 'react-router-dom';
 import { useMemo } from 'react';
 import PieceGroup from '../components/PieceGroup';
+import {
+  CompleteProjectScissorOver,
+  CompleteProjectScissorUnder,
+} from '../components/CompleteProjectScissors';
 import styles from '../pages_styling/ProjectDetails.module.scss';
 import { Notes } from '../components/Notes';
+
 
 function ProjectDetails({ projects, onGroupComplete, onPieceComplete, userId }) { // Destructuring props: ProjectDetails receives 'projects' from ProjectsPage, and the completion callbacks 'onGroupComplete' and 'onPieceComplete' are passed down to PieceGroup.
   const { projectId } = useParams();
@@ -59,6 +64,46 @@ function ProjectDetails({ projects, onGroupComplete, onPieceComplete, userId }) 
           />
         ))}
       </div>
+      <button className={styles.complete_button} type="button">
+        <span className={styles.complete_button__label}>Complete Project</span>
+
+        <svg
+          className={styles.complete_button__stitched}
+          viewBox="0 0 100 40"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <rect
+            className={styles.complete_button__stitched_rect}
+            x="2"
+            y="2"
+            width="96"
+            height="36"
+            rx="0"
+            ry="0"
+            fill="none"
+            vectorEffect="non-scaling-stroke"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-dasharray="6 6"
+          />
+        </svg>
+
+        <span className={styles.complete_button__scissor_under} aria-hidden="true">
+          <CompleteProjectScissorUnder />
+        </span>
+        <span className={styles.complete_button__scissor_over} aria-hidden="true">
+          <CompleteProjectScissorOver />
+        </span>
+        {/* Second pair: same clockwise lap, −50% delay → starts halfway around (always opposite pair A). */}
+        <span className={`${styles.complete_button__scissor_under} ${styles.complete_button__scissor_under_b}`} aria-hidden="true">
+          <CompleteProjectScissorUnder />
+        </span>
+        <span className={`${styles.complete_button__scissor_over} ${styles.complete_button__scissor_over_b}`} aria-hidden="true">
+          <CompleteProjectScissorOver />
+        </span>
+      </button>
     </div>
   );
 }

@@ -1,87 +1,391 @@
 .project_details {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
+  
+	h1 {
+	  text-align: left;
+	  font-weight: bold;
+	  font-size: 3vw;
+	}
+  
+	h2 {
+	  text-align: left;
+	  font-weight: bold;
+	  font-size: 2vw;
+	}
+	h3 {
+	  text-align: left;
+	  font-weight: bold;
+	  font-size: 1.8vw;
+	}
+	ul {
+	  font-size: 1vw;
+	}
+	li {
+	  text-align: left;
+	}
+  }
+  
+  .complete_button {
+	--travel-duration: 14s;
+	--scissor-size: 28px;
+	/* Discreet snips along the travel timeline (opposed ± rotations at the hinge). */
+	--blade-snip-a: -28deg;
+	--blade-snip-b: 28deg;
+	--blade-snip-easing: cubic-bezier(0.33, 0.06, 0.25, 1);
+	--stroke-x0: 2%;
+	--stroke-x1: 98%;
+	--stroke-y0: 5%;
+	--stroke-y1: 95%;
+	/*
+	 * Travel keyframes allocate time ~96:36 like the stitched inner rect (wide button),
+	 * so short left/right edges use less of the timeline than top/bottom — evens out speed.
+	 */
+  
+	width: 50%;
+	margin: 40px auto;
+	font-size: 16px;
+  
+	display: block;
+	position: relative;
+	padding: 1.5em 3em;
+	appearance: none;
+	border: 0;
+	background: transparent;
+	color: black;
+	letter-spacing: .25em;
+	outline: none;
+	cursor: pointer;
+	font-weight: bold;
+	border-radius: 0;
+	isolation: isolate;
+  
+	&__label {
+	  position: relative;
+	  z-index: 6;
+	}
+  
+	&__stitched {
+	  position: absolute;
+	  inset: 0;
+	  width: 100%;
+	  height: 100%;
+	  z-index: 3;
+	  pointer-events: none;
+	}
+  
+	&__stitched_rect {
+	  stroke-dashoffset: 0;
+	  opacity: 1;
+	}
 
-  h1 {
-    text-align: left;
-    font-weight: bold;
-    font-size: 3vw;
+	/*
+	 * Two scissor layers — each renders only its own blade (no hiding needed):
+	 *   under (z1): blade B only — sits below the stitch border
+	 *   over  (z5): blade A + hinge — sits above the stitch border
+	 *
+	 * This means blade A always appears to cross over blade B at the hinge,
+	 * like real scissors, without any masking tricks.
+	 */
+	&__scissor_under,
+	&__scissor_over {
+	  position: absolute;
+	  width: var(--scissor-size);
+	  height: var(--scissor-size);
+	  opacity: 0;
+	  pointer-events: none;
+	  left: var(--stroke-x0);
+	  top: var(--stroke-y0);
+	  transform-origin: center center;
+	  transform: translate(-50%, -50%) rotate(90deg);
+	}
+  
+	&__scissor_svg {
+	  position: absolute;
+	  inset: 0;
+	  width: 100%;
+	  height: 100%;
+	  display: block;
+	  overflow: visible;
+	}
+  
+	&__scissor_under {
+	  z-index: 1;
+	}
+  
+	&__scissor_over {
+	  z-index: 5;
+	}
+
+	/* Blade animations — both layers animate together via the same keyframes */
+	&__scissor_svg :global(.completeProjectBladeA),
+	&__scissor_svg :global(.completeProjectBladeB) {
+	  transform-box: view-box;
+	  transform-origin: 49.9375% 52.3125%;
+	}
+
+	&:hover &__scissor_svg :global(.completeProjectBladeA) {
+	  animation: bladeSnipA var(--travel-duration) var(--blade-snip-easing) infinite both;
+	}
+
+	&:hover &__scissor_svg :global(.completeProjectBladeB) {
+	  animation: bladeSnipB var(--travel-duration) var(--blade-snip-easing) infinite both;
+	}
+  
+	&:hover &__scissor_under,
+	&:hover &__scissor_over,
+	&:hover &__scissor_under_b,
+	&:hover &__scissor_over_b {
+	  opacity: 1;
+	}
+
+	&:hover &__scissor_under,
+	&:hover &__scissor_over {
+	  animation: scissorFollowDashRect var(--travel-duration) linear infinite both;
+	}
+
+	/* Half-lap phase: pair B starts opposite pair A (~bottom-right vs top-left) but same CW orbit. */
+	&:hover &__scissor_under_b,
+	&:hover &__scissor_over_b {
+	  animation: scissorFollowDashRect var(--travel-duration) linear calc(var(--travel-duration) * -0.5) infinite both;
+	}
+
+	&:hover &__scissor_under_b &__scissor_svg :global(.completeProjectBladeA),
+	&:hover &__scissor_over_b &__scissor_svg :global(.completeProjectBladeA),
+	&:hover &__scissor_under_b &__scissor_svg :global(.completeProjectBladeB),
+	&:hover &__scissor_over_b &__scissor_svg :global(.completeProjectBladeB) {
+	  animation-delay: calc(var(--travel-duration) * -0.5);
+	}
+  }
+  
+  @keyframes scissorFollowDashRect {
+	0%,
+	2.2% {
+	  left: var(--stroke-x0);
+	  top: var(--stroke-y0);
+	  transform: translate(-50%, -50%) rotate(90deg);
+	}
+	/* top x0→x1 (~34%) */
+	36.2% {
+	  left: var(--stroke-x1);
+	  top: var(--stroke-y0);
+	  transform: translate(-50%, -50%) rotate(90deg);
+	}
+	37.4% {
+	  left: var(--stroke-x1);
+	  top: var(--stroke-y0);
+	  transform: translate(-50%, -50%) rotate(180deg);
+	}
+	/* right y0→y1 (~12.6%) */
+	50% {
+	  left: var(--stroke-x1);
+	  top: var(--stroke-y1);
+	  transform: translate(-50%, -50%) rotate(180deg);
+	}
+	51.2% {
+	  left: var(--stroke-x1);
+	  top: var(--stroke-y1);
+	  transform: translate(-50%, -50%) rotate(270deg);
+	}
+	/* bottom x1→x0 (~34%) */
+	85.2% {
+	  left: var(--stroke-x0);
+	  top: var(--stroke-y1);
+	  transform: translate(-50%, -50%) rotate(270deg);
+	}
+	86.4% {
+	  left: var(--stroke-x0);
+	  top: var(--stroke-y1);
+	  transform: translate(-50%, -50%) rotate(360deg);
+	}
+	/* left y1→y0 (~12.6%) */
+	99% {
+	  left: var(--stroke-x0);
+	  top: var(--stroke-y0);
+	  transform: translate(-50%, -50%) rotate(360deg);
+	}
+	100% {
+	  left: var(--stroke-x0);
+	  top: var(--stroke-y0);
+	  transform: translate(-50%, -50%) rotate(450deg);
+	}
+  }
+  
+  /* ~16 pinches / lap: peaks every ~6% while travelling */
+  @keyframes bladeSnipA {
+	0%,
+	2% { transform: rotate(0deg); }
+	3% { transform: rotate(var(--blade-snip-a, -28deg)); }
+	4%,
+	8% { transform: rotate(0deg); }
+	9% { transform: rotate(var(--blade-snip-a, -28deg)); }
+	10%,
+	14% { transform: rotate(0deg); }
+	15% { transform: rotate(var(--blade-snip-a, -28deg)); }
+	16%,
+	20% { transform: rotate(0deg); }
+	21% { transform: rotate(var(--blade-snip-a, -28deg)); }
+	22%,
+	26% { transform: rotate(0deg); }
+	27% { transform: rotate(var(--blade-snip-a, -28deg)); }
+	28%,
+	32% { transform: rotate(0deg); }
+	33% { transform: rotate(var(--blade-snip-a, -28deg)); }
+	34%,
+	38% { transform: rotate(0deg); }
+	39% { transform: rotate(var(--blade-snip-a, -28deg)); }
+	40%,
+	44% { transform: rotate(0deg); }
+	45% { transform: rotate(var(--blade-snip-a, -28deg)); }
+	46%,
+	50% { transform: rotate(0deg); }
+	51% { transform: rotate(var(--blade-snip-a, -28deg)); }
+	52%,
+	56% { transform: rotate(0deg); }
+	57% { transform: rotate(var(--blade-snip-a, -28deg)); }
+	58%,
+	62% { transform: rotate(0deg); }
+	63% { transform: rotate(var(--blade-snip-a, -28deg)); }
+	64%,
+	68% { transform: rotate(0deg); }
+	69% { transform: rotate(var(--blade-snip-a, -28deg)); }
+	70%,
+	74% { transform: rotate(0deg); }
+	75% { transform: rotate(var(--blade-snip-a, -28deg)); }
+	76%,
+	80% { transform: rotate(0deg); }
+	81% { transform: rotate(var(--blade-snip-a, -28deg)); }
+	82%,
+	86% { transform: rotate(0deg); }
+	87% { transform: rotate(var(--blade-snip-a, -28deg)); }
+	88%,
+	92% { transform: rotate(0deg); }
+	93% { transform: rotate(var(--blade-snip-a, -28deg)); }
+	94%,
+	100% { transform: rotate(0deg); }
   }
 
-  h2 {
-    text-align: left;
-    font-weight: bold;
-    font-size: 2vw;
+  @keyframes bladeSnipB {
+	0%,
+	2% { transform: rotate(0deg); }
+	3% { transform: rotate(var(--blade-snip-b, 28deg)); }
+	4%,
+	8% { transform: rotate(0deg); }
+	9% { transform: rotate(var(--blade-snip-b, 28deg)); }
+	10%,
+	14% { transform: rotate(0deg); }
+	15% { transform: rotate(var(--blade-snip-b, 28deg)); }
+	16%,
+	20% { transform: rotate(0deg); }
+	21% { transform: rotate(var(--blade-snip-b, 28deg)); }
+	22%,
+	26% { transform: rotate(0deg); }
+	27% { transform: rotate(var(--blade-snip-b, 28deg)); }
+	28%,
+	32% { transform: rotate(0deg); }
+	33% { transform: rotate(var(--blade-snip-b, 28deg)); }
+	34%,
+	38% { transform: rotate(0deg); }
+	39% { transform: rotate(var(--blade-snip-b, 28deg)); }
+	40%,
+	44% { transform: rotate(0deg); }
+	45% { transform: rotate(var(--blade-snip-b, 28deg)); }
+	46%,
+	50% { transform: rotate(0deg); }
+	51% { transform: rotate(var(--blade-snip-b, 28deg)); }
+	52%,
+	56% { transform: rotate(0deg); }
+	57% { transform: rotate(var(--blade-snip-b, 28deg)); }
+	58%,
+	62% { transform: rotate(0deg); }
+	63% { transform: rotate(var(--blade-snip-b, 28deg)); }
+	64%,
+	68% { transform: rotate(0deg); }
+	69% { transform: rotate(var(--blade-snip-b, 28deg)); }
+	70%,
+	74% { transform: rotate(0deg); }
+	75% { transform: rotate(var(--blade-snip-b, 28deg)); }
+	76%,
+	80% { transform: rotate(0deg); }
+	81% { transform: rotate(var(--blade-snip-b, 28deg)); }
+	82%,
+	86% { transform: rotate(0deg); }
+	87% { transform: rotate(var(--blade-snip-b, 28deg)); }
+	88%,
+	92% { transform: rotate(0deg); }
+	93% { transform: rotate(var(--blade-snip-b, 28deg)); }
+	94%,
+	100% { transform: rotate(0deg); }
   }
-  h3 {
-    text-align: left;
-    font-weight: bolds;
-    font-size: 1.8vw;
+  
+  @media (prefers-reduced-motion: reduce) {
+	.complete_button * {
+	  animation: none !important;
+	  transition: none !important;
+	}
   }
-  ul {
-    font-size: 1vw;
+  
+  .piece_interactions {
+	display: flex;
+	align-items: center;
+	h3 {
+	  margin: 0;
+	}
+	img {
+	  height: 20px;
+	  width: 20px;
+	  margin-left: 0.5rem;
+	  vertical-align: middle;
+	  cursor: pointer;
+	}
   }
-  li {
-    text-align: left;
+  
+  .round_text {
+	text-align: left;
+	font-weight: bold;
+	font-size: 1vw;
+	margin-left: 2vw;
   }
-}
-.piece_interactions {
-  display: flex;
-  align-items: center; // align items with the name of the piece
-  h3 {
-    margin: 0; // Remove default margin for better alignment
+  
+  .rounds_container {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	flex-wrap: wrap;
   }
-  img {
-    height: 20px;
-    width: 20px;
-    margin-left: 0.5rem; // Add spacing between text and icons
-    vertical-align: middle; // just really making sure it's centered
-    cursor: pointer; // clickable
+  
+  .rounds_unclicked {
+	border-radius: 50%;
+	width: 60px;
+	height: 60px;
+	aspect-ratio: 1;
+	margin: 20px;
+	cursor: pointer;
+	background-color: transparent;
+	font-size: 1vw;
+	font-family: 'KoHo';
+  
+	&:hover {
+	  background-color: #dfebf4;
+	  border: none;
+	  color: white;
+	}
   }
-}
-.round_text {
-  text-align: left;
-  font-weight: bold;
-  font-size: 1vw;
-  margin-left: 2vw;
-}
-.rounds_container {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  flex-wrap: wrap;
-}
-.rounds_unclicked {
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  aspect-ratio: 1;
-  margin: 20px;
-  cursor: pointer;
-  background-color: transparent;
-  font-size: 1vw;
-  font-family: 'KoHo';
-
-  &:hover {
-    background-color: #dfebf4;
-    border: none;
-    color: white;
+  
+  .rounds_clicked {
+	border-radius: 50%;
+	width: 60px;
+	height: 60px;
+	aspect-ratio: 1;
+	margin: 20px;
+	cursor: pointer;
+	background-color: #dfebf4;
+	font-size: 1vw;
+	border: none;
+  
+	&:hover {
+	  background-color: transparent;
+	  color: black;
+	  border: black;
+	}
   }
-}
-.rounds_clicked {
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  aspect-ratio: 1;
-  margin: 20px;
-  cursor: pointer;
-  background-color: #dfebf4;
-  font-size: 1vw;
-  border: none;
-
-  &:hover {
-    background-color: transparent;
-    color: black;
-    border: black;
-  }
-}
