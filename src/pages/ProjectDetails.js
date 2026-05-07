@@ -14,6 +14,11 @@ function ProjectDetails({ projects, onGroupComplete, onPieceComplete, userId }) 
   const project = projects.find((p) => p.id === projectId);
 
   //expand pieces by quantity with displayName and keep originalName
+  /*
+    the number of pieces won't really change, so we can use useMemo here to cache the result and skip recalculation 
+    unless expandedPieces changes. if we didn't have useMemo, everytime ProjectDetails gets rebuilt, groups would get 
+    rebuilt as well even though it might not need to 
+  */
   const expandedPieces = useMemo(() => {
     if (!project || !project.pieces) return [];
     return project.pieces.flatMap((piece) =>
@@ -29,11 +34,6 @@ function ProjectDetails({ projects, onGroupComplete, onPieceComplete, userId }) 
   }, [project]);
 
   //group expanded pieces by originalName
-  /*
-    the number of pieces won't really change, so we can use useMemo here to cache the result and skip recalculation 
-    unless expandedPieces changes. if we didn't have useMemo, everytime ProjectDetails gets rebuilt, groups would get 
-    rebuilt as well even though it might not need to 
-  */
   const groupedPieces = useMemo(() => {
     expandedPieces.forEach((piece, idx) => {
       if (!groups[piece.originalName]) {
